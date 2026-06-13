@@ -1,0 +1,556 @@
+{
+  "applicationMetadata": {
+    "name": "Maharashtrian साखरपुडा (Engagement) Invitation Web Application",
+    "type": "Engagement Invitation Platform",
+    "purpose": "Elegant digital platform for managing engagement ceremony invitations with RSVP, venue details, gallery, and blessings",
+    "theme": "Botanical Maharashtrian Minimal",
+    "themeVersion": "2.0",
+    "description": "Inspired by traditional Maharashtrian Sakharpuda invitation cards featuring ivory paper, banana leaves, lotus flowers, sacred motifs, and elegant typography.",
+    "targetAudience": "Indian families, guests from diverse tech backgrounds",
+    "language": "Bilingual (Marathi + English)",
+    "framework": "SvelteKit 2.x with TypeScript",
+    "styling": "Vanilla CSS with CSS Custom Properties",
+    "deployment": "Static (Vercel/Cloudflare Pages)"
+  },
+  "designSystem": {
+    "colors": {
+      "primary": "#2F5A3D",
+      "primaryLight": "#4D7259",
+      "primaryDark": "#1F3C28",
+      "secondary": "#B08D57",
+      "secondaryLight": "#C7A97A",
+      "secondaryDark": "#8E6D3C",
+      "accent": "#8A2E42",
+      "accentLight": "#A64A5F",
+      "background": {
+        "main": "#FBF9F3",
+        "alternate": "#F5F1E8",
+        "surface": "#FFFFFF",
+        "subtle": "#F1EEE6"
+      },
+      "text": {
+        "primary": "#233126",
+        "secondary": "#55635A",
+        "muted": "#7B837D",
+        "inverse": "#FFFFFF"
+      },
+      "border": {
+        "default": "#DAD7CD",
+        "subtle": "#ECE7DA",
+        "decorative": "#B08D57"
+      },
+      "status": {
+        "success": "#2F6B47",
+        "warning": "#C08B32",
+        "error": "#A53E4C"
+      }
+    },
+    "typography": {
+      "fontFamily": {
+        "marathi": "\"Noto Serif Devanagari\", serif",
+        "englishHeading": "Georgia, serif",
+        "body": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      "fontWeight": {
+        "regular": 400,
+        "medium": 500,
+        "semibold": 600,
+        "bold": 700
+      },
+      "fontSize": {
+        "xs": "0.75rem",
+        "sm": "0.875rem",
+        "base": "1rem",
+        "lg": "1.125rem",
+        "xl": "1.375rem",
+        "2xl": "1.75rem",
+        "3xl": "2.25rem",
+        "4xl": "3rem",
+        "5xl": "4rem"
+      },
+      "lineHeight": {
+        "tight": 1.2,
+        "normal": 1.5,
+        "relaxed": 1.8
+      },
+      "letterSpacing": {
+        "tight": "-0.02em",
+        "normal": "0",
+        "wide": "0.04em"
+      }
+    },
+    "spacing": {
+      "xs": "0.25rem",
+      "sm": "0.5rem",
+      "md": "1rem",
+      "lg": "1.5rem",
+      "xl": "2rem",
+      "2xl": "3rem",
+      "3xl": "5rem",
+      "4xl": "7rem"
+    },
+    "borderRadius": {
+      "sm": "6px",
+      "md": "10px",
+      "lg": "14px",
+      "xl": "18px",
+      "pill": "999px"
+    },
+    "shadows": {
+      "sm": "0 1px 3px rgba(0,0,0,0.04)",
+      "md": "0 4px 12px rgba(0,0,0,0.06)",
+      "lg": "0 8px 20px rgba(0,0,0,0.08)"
+    },
+    "animation": {
+      "fast": "150ms ease",
+      "normal": "250ms ease",
+      "slow": "400ms ease"
+    },
+    "layout": {
+      "maxWidth": "1200px",
+      "contentWidth": "760px",
+      "sectionGap": "7rem",
+      "containerPadding": "1.5rem"
+    },
+    "surfaces": {
+      "page": {
+        "background": "#FBF9F3",
+        "texture": "subtle-paper"
+      },
+      "card": {
+        "background": "#FFFFFF",
+        "border": "#ECE7DA",
+        "shadow": "md",
+        "radius": "xl"
+      },
+      "glassHeader": {
+        "background": "rgba(251,249,243,0.92)",
+        "blur": "12px",
+        "borderBottom": "#ECE7DA"
+      }
+    },
+    "branding": {
+      "monogram": {
+        "letters": "HV",
+        "style": "minimal-botanical",
+        "primaryColor": "#2F5A3D",
+        "secondaryColor": "#B08D57"
+      },
+      "sacredSymbol": {
+        "type": "ganesha-outline",
+        "position": "hero-top"
+      }
+    },
+    "hero": {
+      "background": {
+        "type": "ivory-paper",
+        "overlay": "lotus-watermark"
+      },
+      "content": {
+        "sacredText": "|| श्री गणेशाय नमः ||",
+        "eventType": "साखरपुडा",
+        "coupleDisplay": "stacked",
+        "showMonogram": true,
+        "showCountdown": true
+      },
+      "visualElements": [
+        "ganesha-outline",
+        "lotus-watermark",
+        "botanical-corners",
+        "thin-decorative-frame"
+      ]
+    },
+    "navigation": {
+      "style": "minimal-floating",
+      "background": "rgba(251,249,243,0.92)",
+      "border": "#ECE7DA",
+      "links": {
+        "default": "#233126",
+        "hover": "#2F5A3D",
+        "active": "#2F5A3D"
+      },
+      "languageToggle": {
+        "shape": "pill",
+        "style": "outline"
+      }
+    },
+    "buttons": {
+      "primary": {
+        "background": "#2F5A3D",
+        "color": "#FFFFFF",
+        "hover": "#1F3C28",
+        "radius": "pill"
+      },
+      "secondary": {
+        "background": "transparent",
+        "color": "#2F5A3D",
+        "border": "#2F5A3D",
+        "radius": "pill"
+      },
+      "accent": {
+        "background": "#8A2E42",
+        "color": "#FFFFFF",
+        "hover": "#712536"
+      }
+    },
+    "countdown": {
+      "style": "sacred-minimal",
+      "numberColor": "#2F5A3D",
+      "labelColor": "#55635A",
+      "background": "#FFFFFF",
+      "border": "#ECE7DA",
+      "shape": "circle"
+    },
+    "rsvp": {
+      "cardStyle": "minimal-paper",
+      "input": {
+        "background": "#FFFFFF",
+        "border": "#DAD7CD",
+        "focus": "#2F5A3D",
+        "radius": "14px"
+      },
+      "submitButton": "primary"
+    },
+    "gallery": {
+      "cardRadius": "18px",
+      "hoverScale": 1.03,
+      "shadow": "md",
+      "background": "#FFFFFF"
+    },
+    "sectionDividers": {
+      "style": "botanical",
+      "variants": [
+        "lotus-divider",
+        "floral-divider",
+        "leaf-divider"
+      ],
+      "color": "#B08D57"
+    },
+    "decorativeAssets": {
+      "corners": [
+        "banana-leaf-top-left",
+        "banana-leaf-top-right",
+        "lotus-bottom-left",
+        "lotus-bottom-right"
+      ],
+      "dividers": [
+        "lotus-divider",
+        "mangal-divider",
+        "floral-divider"
+      ],
+      "backgroundElements": [
+        "watermark-lotus",
+        "paper-grain",
+        "sacred-pattern"
+      ]
+    },
+    "darkMode": false,
+    "pwa": {
+      "themeColor": "#2F5A3D",
+      "backgroundColor": "#FBF9F3"
+    }
+  },
+  "components": {
+    "header": {
+      "name": "Navigation Header",
+      "type": "Minimal Floating Navigation",
+      "features": [
+        "Logo with monogram (H × V)",
+        "Desktop navigation links",
+        "Mobile hamburger menu",
+        "Language toggle (EN/मराठी) in pill outline style",
+        "Glass-morphism background on scroll"
+      ],
+      "styling": {
+        "background": "rgba(251,249,243,0.92) with blur",
+        "textColor": "#233126",
+        "accentColor": "#2F5A3D",
+        "borderBottom": "#ECE7DA"
+      },
+      "navItems": [
+        "Home (मुखपृष्ठ)",
+        "Venue (स्थळ)",
+        "RSVP (उपस्थिती)",
+        "Gallery (फोटो गॅलरी)",
+        "Blessings (आशीर्वाद)"
+      ]
+    },
+    "monogram": {
+      "name": "H × V Monogram",
+      "type": "Decorative SVG Logo",
+      "purpose": "Visual brand identity representing couple initials",
+      "design": {
+        "letters": ["H", "×", "V"],
+        "style": "minimal-botanical",
+        "fontFamily": "Georgia, serif",
+        "colors": "Green (#2F5A3D) with gold (#B08D57) accent",
+        "decorations": [
+          "Minimal botanical frame",
+          "Subtle leaf accent"
+        ]
+      },
+      "sizes": ["small", "large"]
+    },
+    "countdownTimer": {
+      "name": "Event Countdown",
+      "type": "Sacred Minimal Timer",
+      "displays": ["Days", "Hours", "Minutes", "Seconds"],
+      "styling": {
+        "layout": "Flexbox row with circular containers",
+        "typography": "Large bold green numbers with muted labels",
+        "colors": "Green numbers on white circular background"
+      }
+    },
+    "footer": {
+      "name": "Footer",
+      "type": "Minimal Footer",
+      "content": [
+        "Copyright information",
+        "Credits/developed by",
+        "Botanical divider ornament"
+      ]
+    },
+    "button": {
+      "name": "Button Component",
+      "variants": [
+        {
+          "name": "Primary Button",
+          "background": "#2F5A3D",
+          "textColor": "#FFFFFF",
+          "radius": "pill",
+          "usage": "Main CTAs (RSVP, Submit)"
+        },
+        {
+          "name": "Secondary Button",
+          "background": "transparent",
+          "textColor": "#2F5A3D",
+          "border": "#2F5A3D",
+          "radius": "pill",
+          "usage": "Alternative actions"
+        },
+        {
+          "name": "Accent Button",
+          "background": "#8A2E42",
+          "textColor": "#FFFFFF",
+          "usage": "Special accent actions"
+        }
+      ],
+      "interactions": [
+        "Hover: color transition",
+        "Focus: visible focus ring",
+        "Active: darker shade"
+      ]
+    },
+    "card": {
+      "name": "Card Container",
+      "background": "#FFFFFF",
+      "border": "1px solid #ECE7DA",
+      "borderRadius": "18px",
+      "shadow": "0 4px 12px rgba(0,0,0,0.06)",
+      "usage": "Content containers, event details, gallery items"
+    },
+    "form": {
+      "name": "RSVP Form",
+      "fields": [
+        "Name (required)",
+        "Phone Number (required)",
+        "Email (optional)",
+        "Number of Guests (required)",
+        "Guest Names (optional)",
+        "Response (required - Accept/Decline)",
+        "Dietary Preferences (optional)",
+        "Message/Blessings (optional)"
+      ],
+      "styling": {
+        "inputBackground": "#FFFFFF",
+        "inputBorder": "1px solid #DAD7CD",
+        "focusColor": "#2F5A3D",
+        "radius": "14px"
+      }
+    },
+    "gallery": {
+      "name": "Photo Gallery",
+      "type": "Grid with Lightbox",
+      "cardRadius": "18px",
+      "hoverScale": 1.03,
+      "shadow": "md",
+      "features": [
+        "Responsive grid layout",
+        "Lazy loading images",
+        "Lightbox full-screen viewer",
+        "Navigation between photos"
+      ]
+    },
+    "lightbox": {
+      "name": "Lightbox Modal",
+      "type": "Full-screen image viewer",
+      "features": [
+        "Full-screen image display",
+        "Previous/Next navigation",
+        "Close button",
+        "Image counter"
+      ]
+    },
+    "addToCalendar": {
+      "name": "Add to Calendar Button",
+      "platforms": ["Google Calendar", "Apple Calendar", "Outlook"],
+      "type": "Multi-platform calendar integration"
+    }
+  },
+  "pages": {
+    "landingPage": {
+      "path": "/",
+      "name": "Home / Landing Page",
+      "purpose": "Initial invitation display and event overview with botanical Maharashtrian aesthetic",
+      "sections": [
+        {
+          "name": "Hero Section",
+          "content": [
+            "Sacred text: || श्री गणेशाय नमः ||",
+            "Gold monogram (H × V) with botanical style",
+            "Main title: साखरपुडा (Engagement)",
+            "Couple names: {Groom} × {Bride} (stacked display)",
+            "Sacred motifs (ganesha outline, lotus watermark)",
+            "Botanical corner decorations",
+            "Thin decorative frame"
+          ],
+          "styling": {
+            "background": "ivory-paper texture with lotus-watermark overlay",
+            "centerAlignment": true,
+            "largeTypography": true
+          }
+        },
+        {
+          "name": "Invitation Section",
+          "content": [
+            "Formal invitation text",
+            "Host family names",
+            "Botanical dividers between sections"
+          ]
+        },
+        {
+          "name": "Event Details Section",
+          "content": [
+            "Date and Time",
+            "Panchang (auspicious timing)",
+            "Venue name and address",
+            "Dress code",
+            "Contact information"
+          ]
+        },
+        {
+          "name": "Countdown Timer",
+          "content": "Circular sacred-minimal countdown with green numbers"
+        },
+        {
+          "name": "Add to Calendar",
+          "content": "Button to add event to various calendar platforms"
+        }
+      ]
+    },
+    "venuePage": {
+      "path": "/venue",
+      "name": "Venue & Maps",
+      "purpose": "Provide venue details and navigation with minimal botanical design"
+    },
+    "rsvpPage": {
+      "path": "/rsvp",
+      "name": "RSVP Form",
+      "purpose": "Collect guest responses with minimal-paper card style"
+    },
+    "galleryPage": {
+      "path": "/gallery",
+      "name": "Photo Gallery",
+      "purpose": "Display photos with 18px radius cards and gentle hover"
+    },
+    "blessingsPage": {
+      "path": "/blessings",
+      "name": "Blessings & Well-wishes",
+      "purpose": "Collect and display guest messages"
+    },
+    "errorPage": {
+      "path": "/404",
+      "name": "Error Page",
+      "purpose": "Handle page not found errors gracefully"
+    }
+  },
+  "visualDesignElements": {
+    "decorativeElements": [
+      "Green monogram (H × V) with botanical style",
+      "Sacred Ganesha outline motif",
+      "Lotus watermark overlay",
+      "Banana leaf corner decorations",
+      "Thin decorative frame",
+      "Botanical section dividers (lotus, floral, leaf)"
+    ],
+    "imagery": {
+      "invitation": "Elegant invitation with botanical border",
+      "venue": "Map or venue photograph",
+      "gallery": "Guest-uploaded photos from Google Drive",
+      "icons": "Minimal navigation icons"
+    },
+    "patterns": [
+      "Ivory paper background with subtle texture",
+      "Green and muted gold accent palette",
+      "Lotus and leaf decorative motifs",
+      "Clean white card surfaces with generous border radius"
+    ]
+  },
+  "culturalElements": {
+    "language": {
+      "primary": "Marathi (Devanagari script)",
+      "secondary": "English"
+    },
+    "sacredSymbols": ["Ganesha outline", "Om", "Lotus", "Mangal"],
+    "botanicalMotiFs": ["Banana leaf", "Lotus flower", "Mogra", "Parijat"],
+    "terminology": {
+      "eventName": "साखरपुडा (Sakharpuda) - Engagement",
+      "ceremony": "Engagement Ceremony",
+      "traditions": [
+        "Ganesha invocation (श्री गणेशाय नमः)",
+        "Panchang display (auspicious timing)",
+        "Family names formatting",
+        "Traditional invitation verse"
+      ]
+    }
+  },
+  "responsiveDesign": {
+    "breakpoints": {
+      "mobile": "< 640px",
+      "tablet": "640px - 1024px",
+      "desktop": "> 1024px"
+    },
+    "mobileOptimizations": [
+      "Touch-friendly button sizes",
+      "Hamburger menu for navigation",
+      "Single-column layout",
+      "Optimized image sizes",
+      "Readable font sizes"
+    ]
+  },
+  "accessibility": {
+    "features": [
+      "Semantic HTML structure",
+      "ARIA labels for interactive elements",
+      "Color contrast compliance (WCAG AA+)",
+      "Keyboard navigation support",
+      "Focus visible indicators",
+      "Language attributes"
+    ]
+  },
+  "animations": {
+    "transitions": {
+      "fast": "150ms ease",
+      "base": "250ms ease",
+      "slow": "400ms ease"
+    },
+    "effects": [
+      "Smooth page transitions",
+      "Button hover color changes",
+      "Countdown timer updates",
+      "Lightbox fade-in/out",
+      "Navigation menu slide-in",
+      "Scroll effects"
+    ]
+  }
+}
