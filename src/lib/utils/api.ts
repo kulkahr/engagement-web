@@ -133,9 +133,17 @@ export function validateRsvp(data: RsvpData): Record<string, string> {
 	}
 
 	if (data.email && data.email.trim().length > 0) {
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!emailRegex.test(data.email.trim())) {
+		const trimmed = data.email.trim();
+		const atIndex = trimmed.indexOf('@');
+		// Must have local part before @, domain after @ with a dot
+		if (atIndex < 1 || atIndex >= trimmed.length - 1) {
 			errors.email = 'Please enter a valid email';
+		} else {
+			const domain = trimmed.slice(atIndex + 1);
+			const dotIndex = domain.lastIndexOf('.');
+			if (dotIndex < 1 || dotIndex >= domain.length - 1) {
+				errors.email = 'Please enter a valid email';
+			}
 		}
 	}
 

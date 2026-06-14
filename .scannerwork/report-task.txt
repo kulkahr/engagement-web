@@ -3,5 +3,5 @@ projectKey=engagement-web
 serverUrl=https://sonarcloud.io
 serverVersion=8.0.0.90233
 dashboardUrl=https://sonarcloud.io/dashboard?id=engagement-web
-ceTaskId=AZ7FbCs5tRdwnb__ygr2
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZ7FbCs5tRdwnb__ygr2
+ceTaskId=AZ7FbioCfjTzEiaMDrlW
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZ7FbioCfjTzEiaMDrlW
