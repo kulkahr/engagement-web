@@ -212,9 +212,10 @@ export const POST: RequestHandler = async ({ request }) => {
 			{ headers }
 		);
 	} catch (error) {
+		const msg = error instanceof Error ? error.message : 'Unknown error';
 		console.error('Blessings error:', error);
 		return json(
-			{ success: false, message: 'Server error. Please try again.' },
+			{ success: false, message: 'Server error: ' + msg },
 			{ status: 500, headers }
 		);
 	}
