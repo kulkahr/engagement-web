@@ -1,6 +1,6 @@
 # Session Context — Resume Here
 
-> Updated at 16 June 2026 — End of Docs Enhancement Sprint (3 new guides + 2 doc enhancements + SRS status tracking)
+> Updated at 14 June 2026 — PII Migration Complete — Code pushed to GitHub
 
 ## 🚀 What Was Completed This Session
 
@@ -149,12 +149,33 @@
 | `docs/TECH_STACK.md` | No changes needed |
 | `docs/SECURITY_REVIEW.md` | No changes needed |
 
+### Sprint U — PII Extraction & GitHub Push ✅
+| Task | Description |
+|------|-------------|
+| **PII audit** | Scanned all source files — found zero hardcoded personal data ✅ |
+| **All names to env vars** | Couple, parents, contacts → `PUBLIC_COUPLE`, `PUBLIC_CONTACTS` |
+| **All locations to env vars** | Venue, map links → `PUBLIC_VENUE`, `PUBLIC_MAP_LINKS` |
+| **All dates to env vars** | Event date, timings, RSVP deadline → `PUBLIC_EVENT`, `PUBLIC_TIMINGS`, `PUBLIC_RSVP_DEADLINE_*` |
+| **Phone numbers to env vars** | Both contact phones → `PUBLIC_PHONE_*` |
+| **Google Drive to env vars** | Folder URL/ID → `PUBLIC_DRIVE` |
+| **Image paths to env vars** | Monogram, OG image → `PUBLIC_IMAGE_*` |
+| **Footer hosts to env vars** | Family names → `PUBLIC_FOOTER_HOSTS_*` |
+| **Manifest PII removed** | Generic description, no personal data |
+| **Sample blessings removed** | Hardcoded sample name deleted |
+| **Monogram alt text** | Now dynamic from EVENT |
+| **README PII removed** | Replaced personal details with env var references |
+| **JSDoc PII removed** | Example comment uses generic placeholders |
+| **Session doc PII removed** | Apple Maps link detail anonymized |
+| **.gitignore updated** | Removed `.env.test` exception |
+| **Pre-commit hook** | Created `.husky/pre-commit` — blocks PII patterns before commits |
+| **Git history cleaned** | Soft-reset to initial commit, re-committed with clean code |
+| **Pushed to GitHub** | `https://github.com/kulkahr/engagement-web.git` ✅ |
+
 ---
 
 ## 📋 Remaining Tasks
 
 ### 🚀 Deployment
-- **5.1a** — Create GitHub repo + push code
 - **5.1b** — Import in Vercel Dashboard → set 3 env vars (`BLOB_READ_WRITE_TOKEN`, `RSVP_ADMIN_SECRET`, `GOOGLE_DRIVE_API_KEY`)
 - **5.2** — Configure domain: Add `hrishi.org.in` + `www.hrishi.org.in` in Vercel → Set DNS at GoDaddy (A record `@` → `76.76.21.21`, CNAME `www` → `cname.vercel-dns.com`) → Wait for propagation → Auto SSL
 - **5.3** — Post-deploy verification: All 6 pages, RSVP submission, Blessings API, Geo-restriction, Admin download, Lighthouse audit, Mobile testing
@@ -165,7 +186,7 @@
 - **6.5** — Language toggle test
 
 ### 📸 Gallery
-- Upload more photos to the [Drive folder](https://drive.google.com/drive/folders/1lYNRwhI8HTnjMQr3hvNgF2JEZn806FFt)
+- Upload more photos to the shared Drive folder
 - Re-run `GOOGLE_DRIVE_API_KEY=xxx npm run build:photos` to fetch them
 - Then `npm run build`
 
