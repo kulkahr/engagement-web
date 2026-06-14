@@ -40,7 +40,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const { secret } = body;
 
 	// Constant-time comparison to prevent timing attacks
-	if (!secret || !adminSecret || secret.length !== adminSecret.length) {
+	if (!secret?.length || !adminSecret?.length || secret.length !== adminSecret.length) {
 		return json(
 			{ success: false, message: 'Invalid password.' },
 			{ status: 401 }

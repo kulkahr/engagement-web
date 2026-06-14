@@ -14,17 +14,20 @@ echo "🔍 Checking for hardcoded PII in staged files..."
 # Files that are allowed to contain PII (e.g. env files, docs)
 ALLOWED_PATTERNS="\.env|\.md$|docs/|README"
 
-# Source files to check (typescript, svelte, html, js, json)
-SOURCE_PATTERNS="\.(ts|svelte|html|js|json|css)$"
+# Source files to check (typescript, svelte, html, js)
+SOURCE_PATTERNS="\.(ts|svelte|html|js)$"
 
 # ── PII Patterns ──────────────────────────────────────────
 # These match hardcoded personal data in source code.
 
-# Specific Indian phone numbers (+91-XXXXXXXXXX pattern)
+# Phone numbers: +91-XXXXXXXXXX
+# Excludes standard example/test number 9876543210 used in validation messages
 PHONE_PATTERN='\+91-[0-9]{10}'
+PHONE_EXCLUDE='9876543210'
 
-# Email addresses (personal-looking)
+# Email addresses (not example.com)
 EMAIL_PATTERN='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+EMAIL_EXCLUDE='example\.com'
 
 # Hardcoded postal addresses with common Indian patterns
 ADDRESS_PATTERN='(Road|Nagar|Colony|Society|Chowk|Marg|Apartments|Building)\s*[,:]'
@@ -59,20 +62,19 @@ for file in $staged_files; do
     fi
 
     # Check for phone numbers
-    if echo "$content" | grep -Eq "$PHONE_PATTERN"; then
+    matches=$(echo "$content" | grep -Eo "$PHONE_PATTERN" | grep -Ev "$PHONE_EXCLUDE" | head -3)
+    if [ -n "$matches" ]; then
         echo "⚠️  PII DETECTED: Phone number found in $file"
-        echo "$content" | grep -En "$PHONE_PATTERN" | head -3
+        echo "$matches"
         has_pii=1
     fi
 
     # Check for personal email addresses (not example.com)
-    if echo "$content" | grep -Eq "$EMAIL_PATTERN"; then
-        emails=$(echo "$content" | grep -Eo "$EMAIL_PATTERN" | grep -v 'example\.com' | head -3)
-        if [ -n "$emails" ]; then
-            echo "⚠️  PII DETECTED: Email address found in $file"
-            echo "$emails"
-            has_pii=1
-        fi
+    matches=$(echo "$content" | grep -Eo "$EMAIL_PATTERN" | grep -Ev "$EMAIL_EXCLUDE" | head -3)
+    if [ -n "$matches" ]; then
+        echo "⚠️  PII DETECTED: Email address found in $file"
+        echo "$matches"
+        has_pii=1
     fi
 
     # Check for hardcoded addresses

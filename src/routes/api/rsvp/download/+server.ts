@@ -49,9 +49,9 @@ export const GET: RequestHandler = async ({ url }) => {
 
 	const expiresAtStr = token.slice(0, colonIndex);
 	const signature = token.slice(colonIndex + 1);
-	const expiresAt = parseInt(expiresAtStr, 10);
+	const expiresAt = Number.parseInt(expiresAtStr, 10);
 
-	if (isNaN(expiresAt)) {
+	if (Number.isNaN(expiresAt)) {
 		return json(
 			{ success: false, message: 'Invalid token.' },
 			{ status: 401 }

@@ -31,7 +31,7 @@ const rateLimitMap = new Map<string, number[]>();
 
 function isRateLimited(ip: string): boolean {
 	const now = Date.now();
-	const WINDOW_MS = 3600_000; // 1 hour
+	const WINDOW_MS = 3_600_000; // 1 hour
 	const MAX_REQUESTS = 20;
 
 	const timestamps = rateLimitMap.get(ip) || [];
@@ -127,7 +127,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	// Limit request body size
 	const contentLength = request.headers.get('content-length');
-	if (contentLength && parseInt(contentLength) > 10240) {
+	if (contentLength && Number.parseInt(contentLength) > 10240) {
 		return json(
 			{ success: false, message: 'Blessing too large.' },
 			{ status: 413, headers }
@@ -136,7 +136,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	// CSRF protection
 	if (requestOrigin) {
-		const isAllowed = SITE_CONFIG.allowedOrigins.some(allowed => requestOrigin === allowed)
+		const isAllowed = (SITE_CONFIG.allowedOrigins as readonly string[]).includes(requestOrigin)
 			|| requestOrigin.endsWith('.vercel.app');
 		if (!isAllowed) {
 			return json(

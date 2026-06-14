@@ -58,6 +58,7 @@ export async function submitRsvp(data: RsvpData, formKey?: object): Promise<Rsvp
 		return await response.json();
 	} catch (error) {
 		// Retry logic for network failures
+		console.debug('RSVP submission failed, retrying:', error);
 		try {
 			await new Promise(resolve => setTimeout(resolve, 1000));
 			const retryResponse = await fetch(RSVP_ENDPOINT, {
@@ -74,7 +75,8 @@ export async function submitRsvp(data: RsvpData, formKey?: object): Promise<Rsvp
 			}
 
 			return await retryResponse.json();
-		} catch {
+		} catch (retryError) {
+			console.error('Retry failed:', retryError);
 			return {
 				success: false,
 				message: 'Network error. Please try again.'

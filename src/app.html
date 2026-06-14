@@ -42,7 +42,7 @@
 					}
 					return Promise.all(chain);
 				}).then(function() {
-					window.location.reload();
+					globalThis.location.reload();
 				});
 			}
 
@@ -74,7 +74,7 @@
 					whiteSpace: 'nowrap',
 					cursor: 'pointer'
 				});
-				toast.onclick = function() { window.location.reload(); };
+				toast.onclick = function() { globalThis.location.reload(); };
 				document.body.appendChild(toast);
 
 				// Animate in with CSS keyframes (reliable across browsers)
@@ -85,7 +85,7 @@
 
 				// Reload after a brief pause so user sees the toast
 				updateToastTimer = setTimeout(function() {
-					window.location.reload();
+					globalThis.location.reload();
 				}, 2000);
 			}
 

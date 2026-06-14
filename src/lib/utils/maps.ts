@@ -74,16 +74,20 @@ export function getMapLinks(coords: Coordinates, placeName: string): MapLinks {
 		window.open(links.mappls, '_blank', 'noopener,noreferrer');
 	}
 
-	export function copyAddress(address: string): Promise<boolean> {
-	if (!browser) return Promise.resolve(false);
+	export async function copyAddress(address: string): Promise<boolean> {
+	if (!browser) return false;
 
-	if (navigator.clipboard && navigator.clipboard.writeText) {
-		return navigator.clipboard.writeText(address)
-			.then(() => true)
-			.catch(() => false);
+	// Modern Clipboard API (preferred)
+	if (navigator.clipboard?.writeText) {
+		try {
+			await navigator.clipboard.writeText(address);
+			return true;
+		} catch {
+			// Clipboard API failed — try fallback
+		}
 	}
 
-	// Fallback for older browsers
+	// Fallback for older browsers (document.execCommand is deprecated but needed here)
 	try {
 		const textarea = document.createElement('textarea');
 		textarea.value = address;
@@ -92,9 +96,9 @@ export function getMapLinks(coords: Coordinates, placeName: string): MapLinks {
 		document.body.appendChild(textarea);
 		textarea.select();
 		document.execCommand('copy');
-		document.body.removeChild(textarea);
-		return Promise.resolve(true);
+		textarea.remove();
+		return true;
 	} catch {
-		return Promise.resolve(false);
+		return false;
 	}
 }

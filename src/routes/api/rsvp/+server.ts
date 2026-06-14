@@ -29,7 +29,7 @@ const rateLimitMap = new Map<string, number[]>();
 
 function isRateLimited(ip: string): boolean {
 	const now = Date.now();
-	const WINDOW_MS = 3600_000; // 1 hour
+	const WINDOW_MS = 3_600_000; // 1 hour
 	const MAX_REQUESTS = 5;
 
 	const timestamps = rateLimitMap.get(ip) || [];
@@ -67,7 +67,7 @@ export const OPTIONS: RequestHandler = async ({ request }) => {
  */
 function sanitizeCsvField(val: string): string {
 	if (!val) return '';
-	let escaped = String(val).replace(/"/g, '""');
+	let escaped = String(val).replaceAll('"', '""');
 
 	// Prevent CSV injection: fields starting with =, +, -, @ can execute
 	// formulas when the CSV is opened in Excel or Google Sheets.
@@ -122,7 +122,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	// Limit request body size to prevent abuse (RSVP forms are small)
 	const contentLength = request.headers.get('content-length');
-	if (contentLength && parseInt(contentLength) > 10240) { // 10KB max
+	if (contentLength && Number.parseInt(contentLength) > 10240) { // 10KB max
 		return json(
 			{ success: false, message: 'Request body too large.' },
 			{ status: 413, headers }
@@ -132,7 +132,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	// CSRF protection: validate Origin / Referer header
 	// (requestOrigin already extracted above for CORS headers)
 	if (requestOrigin) {
-		const isAllowed = SITE_CONFIG.allowedOrigins.some(allowed => requestOrigin === allowed)
+		const isAllowed = (SITE_CONFIG.allowedOrigins as readonly string[]).includes(requestOrigin)
 			// Allow Vercel preview deployments (e.g., project-name-123.vercel.app)
 			|| requestOrigin.endsWith('.vercel.app');
 		if (!isAllowed) {
@@ -177,7 +177,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			sanitizeCsvField(data.name),
 			sanitizeCsvField(data.phone),
 			sanitizeCsvField(data.email || ''),
-			parseInt(data.guests) || 1,
+			Number.parseInt(data.guests) || 1,
 			sanitizeCsvField(data.guestNames || ''),
 			sanitizeCsvField(data.response),
 			sanitizeCsvField(data.dietary || ''),

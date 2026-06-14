@@ -19,7 +19,7 @@ self.addEventListener('install', (event) => {
 		caches.open(CACHE).then((cache) => {
 			return cache.addAll(ASSETS);
 		}).then(() => {
-			return self.skipWaiting();
+			return globalThis.skipWaiting();
 		})
 	);
 });
@@ -34,11 +34,11 @@ self.addEventListener('activate', (event) => {
 					.map((key) => caches.delete(key))
 			);
 		}).then(() => {
-			return self.clients.claim();
+			return globalThis.clients.claim();
 		}).then(() => {
 			// Notify all clients that a fresh deployment is active
 			// so they can clear stale caches and reload
-			return self.clients.matchAll().then((clients) => {
+			return globalThis.clients.matchAll().then((clients) => {
 				clients.forEach((client) => {
 					client.postMessage({ type: 'sw:activated', cache: CACHE });
 				});
@@ -101,7 +101,7 @@ async function staleWhileRevalidate(request) {
 	// Fetch from network in background (don't block on it)
 	const fetchPromise = fetch(request).then((response) => {
 		if (response.ok) {
-			const cache = caches.open(CACHE).then((cache) => {
+			caches.open(CACHE).then((cache) => {
 				cache.put(request, response.clone());
 			});
 			return response;
