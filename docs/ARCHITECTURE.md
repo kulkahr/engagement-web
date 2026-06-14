@@ -50,8 +50,7 @@ src/
 │   └── api/
 │       ├── rsvp/+server.ts      # POST endpoint — stores RSVP in Vercel Blob CSV
 │       ├── rsvp/download/+server.ts  # GET endpoint — password-protected CSV download
-│       ├── blessings/+server.ts  # GET/POST endpoint — list/submit blessings in Vercel Blob JSON
-│       └── images/[...path]/+server.ts  # GET — image proxy from Vercel Blob (monogram, OG)
+│       └── blessings/+server.ts  # GET/POST endpoint — list/submit blessings in Vercel Blob JSON
 ├── lib/
 │   ├── components/
 │   │   ├── Header.svelte        # Nav with mobile menu, language toggle (48px), Ctrl+L
@@ -77,9 +76,6 @@ src/
 └── static/
     ├── fonts/                   # Self-hosted Noto Serif Devanagari (4 weights)
     ├── images/
-    │   ├── monogram.webp        # LCP image — WebP (7.7KB, 85.8% smaller)
-    │   ├── monogram.png         # PNG fallback
-    │   ├── og-image.svg         # OG social share image (1200×630)
     │   ├── icon-192.png
     │   └── icon-512.png
     ├── favicon.svg
@@ -270,6 +266,25 @@ Layer 4: Application Cache (Svelte)
 
 > **Note**: The previous 100 scores were from a production deployment with CDN. Current 66 score is measured on localhost (`vite preview`) without CDN edge caching, Brotli compression, or HTTP/2 multiplexing. Production deploy to Vercel with `hrishi.org.in` domain will yield 95+ scores.
 
+### Image Serving Architecture
+
+Images (monogram, OG) are served directly from a **public Vercel Blob store** via permanent public URLs set in `PUBLIC_IMAGE_*` env vars. No proxy endpoint is needed:
+
+```
+[Client Browser] ──► <img src="https://xxx.public.blob.vercel-storage.com/monogram.webp" />
+                        │
+                        ▼
+              [Vercel Blob CDN]
+              (permanent URL, never expires)
+```
+
+Data (RSVP CSV, Blessings JSON) is stored in a **private Vercel Blob store** and accessed server-side via `getDownloadUrl()` signed URLs:
+
+```
+[Client] ──► /api/blessings ──► GET ──► head() + getDownloadUrl() + fetch() ──► Private Blob
+            /api/rsvp      ──► POST ──► put() with access: 'private'        ──► Private Blob
+```
+
 ## 8. Integration Points
 
 | External Service | Integration Method | Failure Mode |
@@ -278,7 +293,8 @@ Layer 4: Application Cache (Svelte)
 | Google Maps | `https://www.google.com/maps/dir/?api=1...` | Manual URL entry |
 | Apple Maps | `https://maps.apple.com/?daddr=...` (Universal Links) | Web fallback `maps.apple.com` |
 | Mappls/MapMyIndia | `https://maps.mappls.com/?daddr=...` | Manual URL entry |
-| Vercel Blob (RSVP + Blessings + Image Proxy) | `@vercel/blob` SDK (`head()` + `fetch()`) | Image returns 503/404 fallback |
+| Vercel Blob (RSVP + Blessings — private) | `@vercel/blob` SDK (`head()` + `getDownloadUrl()` + `fetch()`) | Graceful empty state fallback |
+| Vercel Blob (Images — public) | Direct URL (no SDK needed) | Image load failure (broken img tag) |
 | Custom Domain | `hrishi.org.in` (GoDaddy registry) | Vercel auto-provisions SSL |
 
 ## 9. Build Pipeline

@@ -17,8 +17,9 @@
 | Fonts | **Noto Serif Devanagari** (self-hosted) | — | Zero external requests, privacy, offline-capable |
 | Maps | **Universal Links** (https://) | — | Zero JS, native app UX, works offline, cross-platform |
 | PWA | **SvelteKit Service Worker** ($service-worker) | — | Pre-caches all build assets, stale-while-revalidate |
-| Blessings Storage | **Vercel Blob** (JSON) | — | Same blob token as RSVP, public GET list, rate-limited POST |
+| Blessings Storage | **Vercel Blob** (JSON) | — | Same blob token as RSVP, private access, rate-limited POST |
 | Sitemap | **Auto-generated** (`scripts/generate-sitemap.ts`) | — | Prebuild hook scans routes, generates hreflang-aware sitemap.xml |
+| Image Storage | **Vercel Blob** (public store) | — | Permanent public URLs, no proxy endpoint needed |
 
 ---
 
@@ -179,6 +180,12 @@
 ### Decision 9: Vercel Blob JSON for Blessings over Database
 - **Why:** Same infrastructure as RSVP CSV (single `BLOB_READ_WRITE_TOKEN`), append-only pattern, no new dependencies. Blessings are public read, write is rate-limited.
 - **Trade-off:** Not relational — cannot query by date or user. Full JSON blob is read and rewritten on each submission (acceptable for low traffic).
+- **Private access:** Data blobs use `access: 'private'` to work with private blob stores. Reads use `getDownloadUrl()` for signed URLs.
+
+### Decision 10: Public Blob Store for Images over Proxy
+- **Why:** Images don't need authentication — permanent public URLs simplify architecture and eliminate the proxy endpoint.
+- **Trade-off:** Requires separate public blob store. Two `BLOB_READ_WRITE_TOKEN` values in the project.
+- **How it works:** Images are uploaded with `access: 'public'` to a public store. The resulting URLs are set as `PUBLIC_IMAGE_*` env vars and used directly in `<img>` tags.
 
 ---
 

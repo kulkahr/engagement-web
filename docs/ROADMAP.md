@@ -145,6 +145,16 @@
 - [x] Pointed DNS at GoDaddy (A record + CNAME)
 - [x] Both domains verified and SSL auto-provisioned
 
+### Sprint Y: Private Blob Store Fixes & Image Proxy Removal
+- [x] Blessings/RSVP put() — changed from `access: 'public'` to `access: 'private'` (private store rejects public)
+- [x] `allowOverwrite: true` — added for overwriting existing blessings JSON file
+- [x] All blob reads — switched from `fetch(blob.url)` to `getDownloadUrl(blob.url)` (signed URLs for private stores)
+- [x] Image proxy endpoint — deleted (no longer needed)
+- [x] Images re-uploaded to public blob store with permanent URLs
+- [x] `og:image` meta tags — handle full blob URLs (ternary with `startsWith('http')`)
+- [x] CSP updated — `blob.vercel-storage.com` in `img-src`
+- [x] Environment vars — `PUBLIC_IMAGE_*` now point to full public blob URLs
+
 ---
 
 ## 2. Milestones

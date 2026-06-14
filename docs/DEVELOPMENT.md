@@ -1,7 +1,7 @@
 # Development Guide — Getting Started
 
 > **Domain:** `hrishi.org.in`
-> **Stack:** SvelteKit + TypeScript + Vanilla CSS + Vercel Blob
+> **Stack:** SvelteKit + TypeScript + Vanilla CSS + Vercel Blob (private for data, public for images)
 > **Last updated:** 14 June 2026
 
 ---
@@ -60,7 +60,10 @@ open http://localhost:5173
 
 | Variable | Required For | Where to Get |
 |----------|-------------|-------------|
-| `BLOB_READ_WRITE_TOKEN` | RSVP + Blessings + Image proxy API in dev mode | Vercel Dashboard → Storage → Blob |
+| `BLOB_READ_WRITE_TOKEN` | RSVP + Blessings API in dev mode (private blob store) | Vercel Dashboard → Storage → Blob |
+| `PUBLIC_IMAGE_MONOGRAM` | Full public blob URL for monogram.webp | From re-upload script or Vercel Dashboard |
+| `PUBLIC_IMAGE_MONOGRAM_FALLBACK` | Full public blob URL for monogram.png | From re-upload script or Vercel Dashboard |
+| `PUBLIC_IMAGE_OG` | Full public blob URL for og-image.svg | From re-upload script or Vercel Dashboard |
 | `RSVP_ADMIN_SECRET` | Admin page CSV download in dev mode | Choose a password yourself |
 | `GOOGLE_DRIVE_API_KEY` | Gallery photo rebuild (`build:photos`) | Google Cloud Console |
 | `PUBLIC_PHONE_GROOM_FATHER` | Contact phone (public on website) | Your personal number |
@@ -106,7 +109,6 @@ src/
 │   ├── blessings/          # Well-wishes messages
 │   ├── admin/              # Password-protected CSV download
 │   └── api/                # Serverless API endpoints
-│       └── images/[...path]/  # Image proxy from Vercel Blob
 ├── scripts/
 │   ├── fetch-gallery.ts    # Build-time Google Drive photo fetcher
 │   └── generate-sitemap.ts # Auto-generates sitemap.xml

@@ -16,7 +16,7 @@
 
 ---
 
-## ✅ Completed Tasks (All 16 Sprints)
+## ✅ Completed Tasks (All 17 Sprints)
 
 ### Sprint V — SonarQube Cloud Scan & Fixes ✅
 - [x] Install `sonar-scanner` via Homebrew
@@ -31,10 +31,29 @@
 - [x] Update `sonar-project.properties`
 - [x] Final scan: **0 hotspots, 3 code smells**
 
-### Sprint W — Quality Gate Configuration ✅
+### Sprint W — Quality Gate + Image Proxy ✅
 - [x] Create custom quality gate via API
 - [x] Add 6 conditions (security, reliability, maintainability, duplication, hotspots, vulnerabilities)
 - [x] Associate with project (pending user UI action — free plan limitation)
+- [x] Create image proxy endpoint `src/routes/api/images/[...path]/+server.ts`
+- [x] Remove PII images from git + update `.gitignore`
+- [x] Fix blob path (root level, not `images/` subdirectory)
+
+### Sprint X — Adapter Switch & Domain Deploy ✅
+- [x] Switch from `@sveltejs/adapter-static` → `@sveltejs/adapter-auto`
+- [x] Add `hrishi.org.in` + `www.hrishi.org.in` in Vercel
+- [x] Point DNS at GoDaddy (A + CNAME records)
+- [x] Both domains verified, SSL auto-provisioned
+
+### Sprint Y — Private Blob Store Fixes ✅
+- [x] `access: 'public'` → `'private'` in Blessings + RSVP put() calls
+- [x] Add `allowOverwrite: true` for blessings JSON overwrite
+- [x] Replace all `fetch(blob.url)` with `getDownloadUrl(blob.url)` for signed URLs
+- [x] Delete image proxy endpoint (no longer needed)
+- [x] Re-upload images to public blob store for permanent URLs
+- [x] Fix `og:image` meta tags — handle full blob URLs (ternary)
+- [x] Update CSP — add `blob.vercel-storage.com` to `img-src`
+- [x] Update `app.html` preload to full public blob URL
 
 ### Sprint A — Foundation ✅
 - [x] SvelteKit project with static adapter
@@ -71,8 +90,6 @@
 ### Sprint E — Maps & Asset Cleanup ✅
 - [x] Apple Maps Universal Links URL fix
 - [x] Removed unused logo (15KB)
-- [x] Cleaned up `.gitignore` (Apple `.DS_Store`, `._*` files)
-- [x] Deleted stale design system files and `._*` artifacts
 
 ### Sprint F — Security Audit (Batch A-G) ✅
 - [x] Server hardening (10 fixes): CORS, CSP, rate limiting, body size, HSTS
@@ -85,7 +102,6 @@
 - [x] `robots.txt` — `Disallow: /admin/`, `/api/`
 - [x] Auto-generated sitemap via `scripts/generate-sitemap.ts`
 - [x] `prebuild` hook in package.json
-- [x] E2E verification: all 6 pages, OG tags, canonicals
 
 ### Sprint H — Blessings Server API ✅
 - [x] `src/routes/api/blessings/+server.ts` — GET/POST
@@ -117,43 +133,33 @@
 - [x] Google Drive API fetch script
 - [x] 2 real photos from Drive (replaced sample SVGs)
 - [x] Lightbox event propagation fix (nav buttons closing)
-- [x] Broken image URL fix (303 warning → real JPEG thumbnail)
 
 ### Sprint M — SW Dev-Mode Fix ✅
 - [x] `location.port !== '5173'` guard for SW registration
-- [x] `__SVELTEKIT_APP_VERSION__` — killed stale dev server, regenerated `.svelte-kit` types
+- [x] `__SVELTEKIT_APP_VERSION__` fix
 
 ### Sprint N — Dependency & Caching Audit ✅
 - [x] npm audit — 0 critical/high, 4 low (cookie CVE, not exploitable)
-- [x] All 10 dependencies verified at latest npm registry versions
+- [x] All deps verified at latest npm registry versions
 - [x] `vercel.json` — 4 header rules with duplicated security headers
-- [x] Immutable 1yr for assets, no-cache for SW, default for HTML
-- [x] Lighthouse 13.4.0 audit — localhost metrics documented
-- [x] Added cookie CVE (T8) to SECURITY_REVIEW.md
+
+### Sprint O — Deployment ✅
+- [x] GitHub repo created, code pushed
+- [x] Vercel import + env vars configured
+- [x] Domain `hrishi.org.in` configured, DNS pointed
+- [x] Adapter switched to adapter-auto
+- [x] Images migrated to Vercel Blob
+- [x] Private blob store fixes complete
 
 ---
 
 ## 📋 Remaining Tasks
-
-### ✅ Deployment (Complete)
-| # | Task | Status |
-|---|------|--------|
-| **5.1a** | Create GitHub repo | ✅ Done |
-| **5.1b** | Push code | ✅ Done |
-| **5.1c** | Import in Vercel | ✅ Done |
-| **5.1d** | Set env vars in Vercel | ✅ Done |
-| **5.2a** | Add domain in Vercel | ✅ Done (`hrishi.org.in` + `www` verified) |
-| **5.2b** | Point DNS at GoDaddy | ✅ Done (A + CNAME records) |
-| **5.2c** | SSL auto-provisioned | ✅ Done |
-| **5.3** | Blob image proxy | ✅ Done (images via `/api/images/`) |
-| **5.4** | Adapter switch | ✅ Done (`adapter-static` → `adapter-auto`) |
 
 ### 🧪 Testing
 | # | Task | Priority | Notes |
 |---|------|----------|-------|
 | **6.3** | Real device testing | 🟡 Medium | Mid-range Android + iPhone |
 | **6.4** | RSVP end-to-end test | 🟡 Medium | Fill form, submit, verify stored data |
-| **6.5** | Language toggle test | 🟢 Low | All pages both languages, localStorage persistence |
 | **6.6** | Production Lighthouse re-audit | 🟢 Low | Current 66 is localhost; production should be higher |
 
 ### 📸 Gallery
@@ -162,12 +168,6 @@
 | **7.1** | Upload more photos | 🟢 Low | To shared Drive folder |
 | **7.2** | Run `build:photos` | 🟢 Low | `GOOGLE_DRIVE_API_KEY=xxx npm run build:photos` |
 | **7.3** | Rebuild | 🟢 Low | `npm run build` after fetching |
-
-### 🔧 Local Setup
-| # | Task | Priority | Notes |
-|---|------|----------|-------|
-| **8.1** | Create `.env` with `BLOB_READ_WRITE_TOKEN` | 🟢 Low | Required for blessings API in dev mode |
-| **8.2** | Set `RSVP_ADMIN_SECRET` | 🟢 Low | Required for admin page access |
 
 ---
 
@@ -187,18 +187,9 @@ Measured on localhost with Lighthouse 13.4.0 (no CDN, no compression). Productio
 |------|-------------|
 | `src/service-worker.js` | SvelteKit-integrated SW (pre-caches, stale-while-revalidate) |
 | `src/app.html` | HTML shell: OG tags, preloads, SW registration, cleanup, toast |
-| `src/app.css` | Design system + @font-face + keyframes |
-| `vercel.json` | Deployment config: CSP, HSTS, cache headers (4 rules) |
 | `svelte.config.js` | Adapter-auto (Vercel) with `trailingSlash: 'always'`, `handleHttpError` |
-| `docs/SRS.md` | Software requirements specification |
-| `docs/ARCHITECTURE.md` | System architecture document |
-| `docs/ROADMAP.md` | Sprint plan (1–14 complete) |
-| `docs/SECURITY_REVIEW.md` | Security audit (17 fixes + T8 cookie CVE) |
-| `docs/TECH_STACK.md` | Technology stack analysis with performance budget |
-| `docs/CSS_CONVENTIONS.md` | Animation keyframe conventions |
-| `docs/COST.md` | Cost estimation (free tier sufficient) |
-| `docs/SESSION_CONTEXT.md` | Session tracking (all sprints documented) |
+| `vercel.json` | Deployment config: CSP, HSTS, cache headers (4 rules) |
 
 ---
 
-*End of Task List — 16 June 2026 — 14 sprints complete, 8 remaining tasks (deployment/testing/setup)*
+*End of Task List — 14 June 2026 — 17 sprints complete, 3 remaining tasks (testing)*

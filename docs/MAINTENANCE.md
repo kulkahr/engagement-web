@@ -100,7 +100,7 @@ npm run build && npm run check
 | `svelte` | 5.56.3 | ✅ Latest |
 | `@sveltejs/kit` | 2.65.0 | ✅ Latest |
 | `@sveltejs/adapter-auto` | 7.0.1 | ✅ Latest |
-| `@sveltejs/adapter-vercel` | — | ✅ Installed |
+| `@sveltejs/adapter-vercel` | 6.0.0 | ✅ Installed |
 | `vite` | 8.0.16 | ✅ Latest |
 | `svelte-check` | 4.6.0 | ✅ Latest |
 | `typescript` | 6.0.3 | ✅ Latest |

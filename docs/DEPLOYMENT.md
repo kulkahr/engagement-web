@@ -2,7 +2,8 @@
 
 > **Domain:** `hrishi.org.in` (purchased via GoDaddy)
 > **Hosting:** Vercel (Hobby — free tier)
-> **Storage:** Vercel Blob (RSVP CSV + Blessings JSON)
+> **Storage:** Vercel Blob (RSVP CSV + Blessings JSON — private store)
+> **Images:** Vercel Blob (public store — permanent URLs)
 > **Last updated:** 14 June 2026
 
 ---
@@ -15,7 +16,10 @@
 | Vercel account | [vercel.com](https://vercel.com/signup) | Free (Hobby) |
 | GoDaddy account | [godaddy.com](https://godaddy.com) | Domain ~$10/yr |
 | Node.js 18+ | [nodejs.org](https://nodejs.org) or `nvm` | Free |
-| `BLOB_READ_WRITE_TOKEN` | Vercel Dashboard → Storage → Blob → Create token | Free |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Dashboard → Storage → Blob → Create token (private store) | Free |
+| `PUBLIC_IMAGE_MONOGRAM` | Public blob URL from re-upload script (or upload manually) | — |
+| `PUBLIC_IMAGE_MONOGRAM_FALLBACK` | Public blob URL for PNG fallback | — |
+| `PUBLIC_IMAGE_OG` | Public blob URL for OG social share image | — |
 | `RSVP_ADMIN_SECRET` | Choose a strong password yourself | — |
 | `GOOGLE_DRIVE_API_KEY` | [Google Cloud Console](https://console.cloud.google.com) → APIs & Services → Credentials | Free |
 
@@ -53,14 +57,16 @@ Add these variables in **Vercel Dashboard → Project Settings → Environment V
 
 | Name | Value | Scope |
 |------|-------|-------|
-| `BLOB_READ_WRITE_TOKEN` | From Vercel Storage → Blob → Create token | Production |
+| `BLOB_READ_WRITE_TOKEN` | From Vercel Storage → Blob → Create token (private store) | Production |
 | `RSVP_ADMIN_SECRET` | A strong password of your choice | Production |
 | `GOOGLE_DRIVE_API_KEY` | From Google Cloud Console (optional, for gallery rebuilds) | Production |
-| `PUBLIC_IMAGE_MONOGRAM` | `/api/images/monogram.webp` | Production |
-| `PUBLIC_IMAGE_MONOGRAM_FALLBACK` | `/api/images/monogram.png` | Production |
-| `PUBLIC_IMAGE_OG` | `/api/images/og-image.svg` | Production |
+| `PUBLIC_IMAGE_MONOGRAM` | Full public blob URL (e.g. `https://xxx.public.blob.vercel-storage.com/monogram.webp`) | Production |
+| `PUBLIC_IMAGE_MONOGRAM_FALLBACK` | Full public blob URL for PNG fallback | Production |
+| `PUBLIC_IMAGE_OG` | Full public blob URL for OG image | Production |
 
-> **Image proxy:** PII images (monogram, OG) are served via the `/api/images/` proxy endpoint which fetches from a private Vercel Blob store using `@vercel/blob`. The private blob URL/token never reaches the client. Images must be uploaded to the blob store before deployment.
+> **Images:** PII images (monogram, OG) are stored in a **public Vercel Blob store** and served directly via permanent public URLs from the `PUBLIC_IMAGE_*` env vars. No proxy endpoint needed. Images must be uploaded to the public blob store before deployment.
+
+> **Data (RSVP + Blessings):** Stored in a **private Vercel Blob store** using the `BLOB_READ_WRITE_TOKEN`. Serverless API routes use `getDownloadUrl()` to generate signed URLs for reading private blobs.
 
 After setting vars, redeploy: either push a commit, or go to **Deployments → ⋮ → Redeploy**.
 
@@ -148,6 +154,8 @@ ns2.vercel-dns.com
 | Custom domain shows Vercel 404 | DNS not propagated yet | Wait and verify in Vercel Domains tab |
 | `www.hrishi.org.in` doesn't load | Missing CNAME or redirect | Add CNAME record or configure redirect in Vercel |
 | Mixed content warning (HTTP on HTTPS) | Hardcoded `http://` URL in code | All URLs should use `https://` or protocol-relative |
+| Blog images show as broken | Permission issue on public blob store | Verify images were uploaded with `access: 'public'` |
+| Image 500 error | Missing `PUBLIC_IMAGE_*` env var | Check env vars are set with correct full blob URLs |
 
 ---
 
