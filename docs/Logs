@@ -1,0 +1,105 @@
+16:01:30.161 Running build in Washington, D.C., USA (East) – iad1
+16:01:30.163 Build machine configuration: 2 cores, 8 GB
+16:01:30.419 Cloning github.com/kulkahr/engagement-web (Branch: main, Commit: 9bcc353)
+16:01:31.353 Cloning completed: 933.000ms
+16:01:31.513 Restored build cache from previous deployment (2cCFXkaVRQyTXeTJPHwLjkJx82Ro)
+16:01:32.373 Running "vercel build"
+16:01:32.395 Vercel CLI 54.12.2
+16:01:33.552 Running "install" command: `npm install`...
+16:01:34.803 
+16:01:34.803 > web@0.0.1 prepare
+16:01:34.803 > svelte-kit sync || echo ''
+16:01:34.803 
+16:01:35.887 
+16:01:35.887 up to date, audited 70 packages in 2s
+16:01:35.888 
+16:01:35.888 14 packages are looking for funding
+16:01:35.888   run `npm fund` for details
+16:01:35.909 
+16:01:35.910 4 low severity vulnerabilities
+16:01:35.910 
+16:01:35.910 To address all issues (including breaking changes), run:
+16:01:35.912   npm audit fix --force
+16:01:35.912 
+16:01:35.912 Run `npm audit` for details.
+16:01:36.149 
+16:01:36.149 > web@0.0.1 prebuild
+16:01:36.149 > npm run generate:sitemap
+16:01:36.150 
+16:01:36.261 
+16:01:36.262 > web@0.0.1 generate:sitemap
+16:01:36.262 > npx tsx scripts/generate-sitemap.ts
+16:01:36.263 
+16:01:36.771 npm warn exec The following package was not found and will be installed: tsx@4.22.4
+16:01:38.493 🔍 Scanning routes in: /vercel/path0/src/routes
+16:01:38.494 📄 Found 5 public route(s):
+16:01:38.495    /
+16:01:38.495    /blessings
+16:01:38.496    /gallery
+16:01:38.496    /rsvp
+16:01:38.496    /venue
+16:01:38.503 ✅ Sitemap written to: /vercel/path0/static/sitemap.xml
+16:01:38.504    5 URL(s) generated
+16:01:38.532 
+16:01:38.532 > web@0.0.1 build
+16:01:38.532 > vite build
+16:01:38.532 
+16:01:39.380 vite v8.0.16 building ssr environment for production...
+16:01:40.116 
+transforming...✓ 190 modules transformed.
+16:01:40.207 rendering chunks...
+16:01:41.193 vite v8.0.16 building client environment for production...
+16:01:41.633 
+transforming...✓ 198 modules transformed.
+16:01:41.673 rendering chunks...
+16:01:41.718 computing gzip size...
+16:01:41.724 .svelte-kit/output/client/_app/version.json                           0.02 kB │ gzip:  0.04 kB
+16:01:41.725 .svelte-kit/output/client/.vite/manifest.json                         5.97 kB │ gzip:  0.87 kB
+16:01:41.725 .svelte-kit/output/client/_app/immutable/assets/3.CGs4MiEE.css        0.56 kB │ gzip:  0.25 kB
+16:01:41.725 .svelte-kit/output/client/_app/immutable/assets/1.BCuGJPOA.css        0.59 kB │ gzip:  0.27 kB
+16:01:41.725 .svelte-kit/output/client/_app/immutable/assets/4.DClDdizM.css        0.92 kB │ gzip:  0.34 kB
+16:01:41.725 .svelte-kit/output/client/_app/immutable/assets/config.SWaC4pIM.css   1.38 kB │ gzip:  0.44 kB
+16:01:41.726 .svelte-kit/output/client/_app/immutable/assets/6.wLbCVeMw.css        3.39 kB │ gzip:  1.02 kB
+16:01:41.727 .svelte-kit/output/client/_app/immutable/assets/7.Dr2T9yt9.css        4.06 kB │ gzip:  1.11 kB
+16:01:41.727 .svelte-kit/output/client/_app/immutable/assets/5.BnidfC3b.css        4.54 kB │ gzip:  1.25 kB
+16:01:41.727 .svelte-kit/output/client/_app/immutable/assets/2.JfiGc_rH.css       10.65 kB │ gzip:  2.23 kB
+16:01:41.727 .svelte-kit/output/client/_app/immutable/assets/0.CRhch-z6.css       21.31 kB │ gzip:  4.86 kB
+16:01:41.728 .svelte-kit/output/client/_app/immutable/chunks/C6maW06s.js           0.02 kB │ gzip:  0.04 kB
+16:01:41.728 .svelte-kit/output/client/_app/immutable/chunks/xihTtKlq.js           0.06 kB │ gzip:  0.08 kB
+16:01:41.728 .svelte-kit/output/client/_app/immutable/entry/start.BOQAc3jQ.js      0.07 kB │ gzip:  0.08 kB
+16:01:41.728 .svelte-kit/output/client/_app/immutable/chunks/CESFm-ux.js           0.24 kB │ gzip:  0.17 kB
+16:01:41.729 .svelte-kit/output/client/_app/immutable/chunks/DGQ1oWrO.js           0.77 kB │ gzip:  0.27 kB
+16:01:41.729 .svelte-kit/output/client/_app/immutable/chunks/BtUFsDq4.js           0.88 kB │ gzip:  0.52 kB
+16:01:41.729 .svelte-kit/output/client/_app/immutable/chunks/kNaey6uv.js           1.20 kB │ gzip:  0.68 kB
+16:01:41.729 .svelte-kit/output/client/_app/immutable/nodes/1.vPLwTFPw.js          1.61 kB │ gzip:  0.92 kB
+16:01:41.730 .svelte-kit/output/client/_app/immutable/nodes/3.88J4Uzle.js          3.42 kB │ gzip:  1.73 kB
+16:01:41.730 .svelte-kit/output/client/_app/immutable/entry/app.Btl_vJpJ.js        3.78 kB │ gzip:  1.59 kB
+16:01:41.730 .svelte-kit/output/client/_app/immutable/chunks/SPT8Qjpt.js           4.84 kB │ gzip:  2.14 kB
+16:01:41.731 .svelte-kit/output/client/_app/immutable/nodes/5.BTxqF_sz.js          5.69 kB │ gzip:  2.41 kB
+16:01:41.731 .svelte-kit/output/client/_app/immutable/nodes/0.C3iXdEaN.js          6.41 kB │ gzip:  2.73 kB
+16:01:41.732 .svelte-kit/output/client/_app/immutable/nodes/4.DP49DXP0.js          6.59 kB │ gzip:  2.96 kB
+16:01:41.732 .svelte-kit/output/client/_app/immutable/nodes/7.B3EVmaro.js          6.86 kB │ gzip:  2.53 kB
+16:01:41.732 .svelte-kit/output/client/_app/immutable/nodes/6.DP7PFVS_.js         10.36 kB │ gzip:  3.83 kB
+16:01:41.732 .svelte-kit/output/client/_app/immutable/chunks/D-eyOUWk.js          10.53 kB │ gzip:  3.55 kB
+16:01:41.733 .svelte-kit/output/client/_app/immutable/nodes/2.Dj4jb8TA.js         15.81 kB │ gzip:  5.26 kB
+16:01:41.733 .svelte-kit/output/client/_app/immutable/chunks/DPMPev90.js          26.29 kB │ gzip: 10.23 kB
+16:01:41.733 .svelte-kit/output/client/_app/immutable/chunks/-IdslD-a.js          49.33 kB │ gzip: 18.97 kB
+16:01:41.734 
+16:01:41.735 ✓ built in 535ms
+16:01:42.693 
+16:01:42.693 [404] GET /images/monogram.webp
+16:01:42.721 
+16:01:42.727 [404] GET /images/monogram.png
+16:01:42.727 
+16:01:42.728 node:internal/event_target:1118
+16:01:42.728   process.nextTick(() => { throw err; });
+16:01:42.728                            ^
+16:01:42.728 Error: 404 /images/monogram.webp (linked from /)
+16:01:42.729 To suppress or handle this error, implement `handleHttpError` in https://svelte.dev/docs/kit/configuration#prerender
+16:01:42.729     at file:///vercel/path0/node_modules/@sveltejs/kit/src/core/config/options.js:230:13
+16:01:42.729     at file:///vercel/path0/node_modules/@sveltejs/kit/src/core/postbuild/prerender.js:76:25
+16:01:42.729     at save (file:///vercel/path0/node_modules/@sveltejs/kit/src/core/postbuild/prerender.js:470:4)
+16:01:42.729     at visit (file:///vercel/path0/node_modules/@sveltejs/kit/src/core/postbuild/prerender.js:289:3)
+16:01:42.730 
+16:01:42.730 Node.js v24.15.0
+16:01:42.790 Error: Command "npm run build" exited with 1

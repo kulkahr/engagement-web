@@ -12,7 +12,18 @@ const config = {
 			fallback: '404.html',
 			precompress: false,
 			strict: true
-		})
+		}),
+		// Ignore missing images that are now served via the /api/images/ proxy from Vercel Blob
+		// These files were removed from static/ to avoid committing PII to git.
+		prerender: {
+			handleHttpError: ({ path, status }) => {
+				// Only allow 404s for the specific files migrated to Vercel Blob
+				if (status !== 404) throw new Error(`${status} ${path}`);
+				const imagesServedViaApi = ['/images/monogram.webp', '/images/monogram.png', '/images/og-image.svg'];
+				if (imagesServedViaApi.includes(path)) return;
+				throw new Error(`404 ${path}`);
+			}
+		}
 	}
 };
 
