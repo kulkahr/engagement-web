@@ -149,9 +149,9 @@ function generateSitemapXml(routes: RouteEntry[]): string {
 			`\t\t<xhtml:link rel="alternate" hreflang="x-default" href="${escapedLoc}" />`,
 			`\t\t<changefreq>${config.changefreq}</changefreq>`,
 			`\t\t<priority>${config.priority}</priority>`,
-			'\t</url>'
+			'\t</url>',
+			''
 		);
-		lines.push('');
 	}
 
 	lines.push('</urlset>', '');
