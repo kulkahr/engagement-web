@@ -63,7 +63,8 @@ async function loadBlessings(): Promise<StoredBlessing[]> {
 		const blob = await head(BLOB_FILENAME, { token: env.BLOB_READ_WRITE_TOKEN });
 		if (!blob) return [];
 
-		const response = await fetch(blob.url);
+		const downloadUrl = blob.downloadUrl || blob.url;
+		const response = await fetch(downloadUrl);
 		if (!response.ok) return [];
 
 		const data = await response.json();
@@ -80,8 +81,8 @@ async function loadBlessings(): Promise<StoredBlessing[]> {
 async function saveBlessings(blessings: StoredBlessing[]): Promise<void> {
 	await put(BLOB_FILENAME, JSON.stringify(blessings, null, '\t'), {
 		token: env.BLOB_READ_WRITE_TOKEN,
-		contentType: 'application/json',
-		access: 'public'
+		access: 'private',
+		contentType: 'application/json'
 	});
 }
 

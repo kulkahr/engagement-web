@@ -91,7 +91,8 @@ async function appendToCsv(row: string): Promise<void> {
 	try {
 		const existingBlob = await head(CSV_FILENAME, { token: env.BLOB_READ_WRITE_TOKEN });
 		if (existingBlob) {
-			const response = await fetch(existingBlob.url);
+			const downloadUrl = existingBlob.downloadUrl || existingBlob.url;
+			const response = await fetch(downloadUrl);
 			if (response.ok) {
 				existingContent = await response.text();
 			}
@@ -107,8 +108,8 @@ async function appendToCsv(row: string): Promise<void> {
 
 	await put(CSV_FILENAME, newContent, {
 		token: env.BLOB_READ_WRITE_TOKEN,
-		contentType: 'text/csv',
-		access: 'public'
+		access: 'private',
+		contentType: 'text/csv'
 	});
 }
 

@@ -94,7 +94,8 @@ export const GET: RequestHandler = async ({ url }) => {
 			});
 		}
 
-		const response = await fetch(existingBlob.url);
+		const downloadUrl = existingBlob.downloadUrl || existingBlob.url;
+		const response = await fetch(downloadUrl);
 		const csvContent = await response.text();
 
 		return new Response(csvContent, {
