@@ -43,6 +43,11 @@ yarn-error.log*
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# PII image files — must be served from Vercel Blob, not committed to git
+static/images/monogram.webp
+static/images/monogram.png
+static/images/og-image.svg
+
 # Build artifacts
 dist/
 *.tsbuildinfo
