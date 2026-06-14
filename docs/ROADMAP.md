@@ -118,6 +118,18 @@
 - [x] Enhanced `docs/SRS.md` — added implementation status column to all functional requirements
 - [x] Updated all doc footers and cross-reference links
 
+### Sprint V: SonarQube Cloud Scan & Fixes
+- [x] Installed `sonar-scanner` via Homebrew
+- [x] Created `sonar-project.properties` for SonarCloud
+- [x] First SonarCloud scan — 18 issues found, all resolved
+- [x] SonarCloud cloud scan — 48 issues found across 8 files
+- [x] Fixed 45 issues (`.replaceAll()`, `globalThis`, `.push()` consolidation, etc.)
+- [x] Fixed 1 security hotspot (ReDoS in email regex)
+- [x] 3 remaining issues accepted as tradeoffs
+- [x] Created "Engagement Web Gate" quality gate (6 conditions)
+- [x] Updated `sonar-project.properties` with quality gate reference
+- [x] Final scan: **0 hotspots, 3 code smells** ✅
+
 ---
 
 ## 2. Milestones

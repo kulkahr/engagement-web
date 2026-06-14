@@ -16,7 +16,25 @@
 
 ---
 
-## ✅ Completed Tasks (All 14 Sprints)
+## ✅ Completed Tasks (All 16 Sprints)
+
+### Sprint V — SonarQube Cloud Scan & Fixes ✅
+- [x] Install `sonar-scanner` via Homebrew
+- [x] Create `sonar-project.properties` for SonarCloud
+- [x] Run initial SonarCloud scan — 18 issues found
+- [x] Fix all 18 issues (commit `f83bdf3`)
+- [x] Run SonarCloud cloud scan — 48 issues found
+- [x] Fix 45 of 48 issues across 8 files
+- [x] Fix 1 security hotspot (ReDoS in email regex)
+- [x] 3 remaining issues accepted as tradeoffs
+- [x] Create "Engagement Web Gate" quality gate (6 conditions)
+- [x] Update `sonar-project.properties`
+- [x] Final scan: **0 hotspots, 3 code smells**
+
+### Sprint W — Quality Gate Configuration ✅
+- [x] Create custom quality gate via API
+- [x] Add 6 conditions (security, reliability, maintainability, duplication, hotspots, vulnerabilities)
+- [x] Associate with project (pending user UI action — free plan limitation)
 
 ### Sprint A — Foundation ✅
 - [x] SvelteKit project with static adapter

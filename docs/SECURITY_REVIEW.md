@@ -1,11 +1,12 @@
 # 🔐 Security Review — साखरपुडा Engagement Website
 
 > Generated: 13 June 2026
-> Updated: 16 June 2026 — **All prior fixes + Blessings API audit + SW cleanup review** ✅
+> Updated: 14 June 2026 — **All prior fixes + Blessings API audit + SW cleanup review + ReDoS hotspot fix** ✅
 > Phishing Audit: 14 June 2026 — Clean ✅
 > Tech Stack Audit: 14 June 2026 — 5 findings found, all resolved ✅
 > Blessings API Audit: 16 June 2026 — Reviewed ✅
-> Files Reviewed: 22
+> SonarQube Security Hotspot: 14 June 2026 — ReDoS in email regex fixed ✅
+> Files Reviewed: 23
 > New Files Created: 2 (`src/routes/api/rsvp/auth/+server.ts`, `src/routes/api/blessings/+server.ts`)
 
 ---

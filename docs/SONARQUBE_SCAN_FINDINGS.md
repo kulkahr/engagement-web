@@ -374,13 +374,74 @@ All 18 SonarQube findings were fixed in commit `f83bdf3` (14 June 2026):
 
 ---
 
+## 🔄 Follow-Up: SonarCloud Cloud Scan (14 June 2026)
+
+After fixing the initial 18 issues, a full SonarCloud cloud scan was run. This found 48 issues across the full codebase (including scripts and utils not covered in the initial scan).
+
+### Results: 48 Issues → 3 Remaining
+
+| Stage | Issues | Hotspots |
+|-------|--------|----------|
+| Initial SonarCloud scan | 48 | 0 |
+| Fixed | 45 | 1 (ReDoS) → Fixed |
+| Remaining (accepted) | 3 | 0 |
+
+### Remaining 3 Code Smells (Accepted Tradeoffs)
+
+| Issue | File | Rationale |
+|-------|------|-----------|
+| Empty try/catch handler | `scripts/fetch-gallery.ts:117` | Intentional — graceful degradation to empty gallery on error |
+| Top-level await | `src/app.html:45` | SvelteKit requires inline script for dynamic title — not a real issue |
+| `document.execCommand` | `src/lib/utils/maps.ts:103` | Acknowledged clipboard API fallback for older browsers |
+
+### Security Hotspot Fixed
+
+| Issue | File | Fix | Commit |
+|-------|------|-----|--------|
+| ReDoS vulnerability in email regex | `src/lib/utils/api.ts:136` | Replaced `/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/` with safe `indexOf`/`lastIndexOf` split-based validation | `044fd28` |
+
+### Quality Gate Created
+
+**"Engagement Web Gate"** — 6 conditions to prevent regressions:
+
+| Condition | Metric | Threshold |
+|-----------|--------|-----------|
+| No new security issues worse than A | `new_security_rating` | > 1 |
+| No new reliability issues worse than A | `new_reliability_rating` | > 1 |
+| No new maintainability issues worse than A | `new_maintainability_rating` | > 1 |
+| No more than 3% duplicated lines | `new_duplicated_lines_density` | > 3 |
+| All security hotspots reviewed | `new_security_hotspots_reviewed` | < 100 |
+| Zero new vulnerabilities | `new_vulnerabilities` | > 0 |
+
+> **Note:** Associate the gate with the project in SonarCloud UI: [Quality Gates](https://sonarcloud.io/project/quality_gate?id=engagement-web)
+
+### Fixed Issues by File (45 fixes)
+
+| File | Issues Fixed |
+|------|-------------|
+| `src/lib/utils/content.ts` | 14× `.replace()` → `.replaceAll()` |
+| `scripts/generate-sitemap.ts` | 13 issues — unused imports, `.replaceAll`, `routeParts`, `.push()` consolidation (×2) |
+| `src/lib/utils/maps.ts` | 6× `window.open` → module-level `win` const, `window` → `globalThis` |
+| `src/lib/utils/i18n.ts` | 3 issues — `detectLanguage()` return value, `typeof undefined` → `=== undefined`, `window` → `globalThis` |
+| `src/app.html` | 3 issues — added `<title>` fallback, `'caches' in globalThis`, `globalThis.addEventListener` |
+| `scripts/fetch-gallery.ts` | 2 issues — security logging sanitized, top-level await restructured |
+| `src/lib/data/gallery.ts` | 1 issue — `url.match()` → `pattern.exec()` |
+| `src/lib/utils/api.ts` | 1 issue — ReDoS email regex fixed (security hotspot) |
+| `src/service-worker.js` | 1 issue — unused `const cache` removed |
+| `src/routes/api/*` | 1 issue — various `.includes()`, `Number.parseInt`, `Number.isNaN` |
+
+---
+
 ## 📝 Next Steps
 
 ~~1. Review and prioritize fixes based on impact~~ ✅ Done
 ~~2. Create individual PRs for each fix category~~ ✅ Done (single commit `f83bdf3`)
-~~3. Re-run SonarQube scan after fixes to verify resolution~~ ⏳ Pending — re-run scan to confirm
-4. Consider enabling SonarQube Connected Mode for advanced security analysis
+~~3. Re-run SonarQube scan after fixes to verify resolution~~ ✅ Done — 3 remaining (accepted)
+~~4. Fix security hotspot~~ ✅ Done (commit `044fd28`)
+5. Associate the quality gate with the project in SonarCloud UI
+6. Consider enabling SonarQube Connected Mode for advanced security analysis
 
 ---
 
-*SonarQube Scan Report — 13 December 2026 — All 18 issues resolved 14 June 2026 (commit `f83bdf3`).*
+*SonarQube Scan Report — 13 December 2026 / 14 June 2026 — All 18 original issues + 45/48 cloud issues resolved. 0 hotspots remaining. Quality gate created.*
+
