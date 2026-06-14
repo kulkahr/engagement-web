@@ -14,7 +14,7 @@
  * The private blob URL/token never reaches the client.
  */
 
-import { head } from '@vercel/blob';
+import { getDownloadUrl } from '@vercel/blob';
 import { env } from '$env/dynamic/private';
 import type { RequestHandler } from './$types';
 
@@ -54,14 +54,13 @@ export const GET: RequestHandler = async ({ params }) => {
 
 	try {
 		const blobPath = BLOB_DIR ? `${BLOB_DIR}/${path}` : path;
-		const blob = await head(blobPath, { token: env.BLOB_READ_WRITE_TOKEN });
 
-		if (!blob) {
-			return new Response('Image not found in blob storage.', { status: 404 });
-		}
+		// Generate a fresh signed download URL for the private blob
+		// Token is automatically read from BLOB_READ_WRITE_TOKEN env var
+		const downloadUrl = await getDownloadUrl(blobPath);
 
-		// Fetch the image from the signed blob URL
-		const response = await fetch(blob.url);
+		// Fetch the image from the signed URL
+		const response = await fetch(downloadUrl);
 
 		if (!response.ok) {
 			console.error(`Blob fetch failed for ${blobPath}: ${response.status}`);
