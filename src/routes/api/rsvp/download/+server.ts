@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { head } from '@vercel/blob';
+import { head, getDownloadUrl } from '@vercel/blob';
 import { env } from '$env/dynamic/private';
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
@@ -94,8 +94,8 @@ export const GET: RequestHandler = async ({ url }) => {
 			});
 		}
 
-		const downloadUrl = existingBlob.downloadUrl || existingBlob.url;
-		const response = await fetch(downloadUrl);
+		const signedUrl = await getDownloadUrl(existingBlob.url);
+		const response = await fetch(signedUrl);
 		const csvContent = await response.text();
 
 		return new Response(csvContent, {

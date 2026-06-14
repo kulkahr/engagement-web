@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { SITE_CONFIG } from '$lib/data/config';
-import { put, head } from '@vercel/blob';
+import { put, head, getDownloadUrl } from '@vercel/blob';
 import { env } from '$env/dynamic/private';
 
 const BLOB_FILENAME = 'blessings-data.json';
@@ -63,8 +63,8 @@ async function loadBlessings(): Promise<StoredBlessing[]> {
 		const blob = await head(BLOB_FILENAME, { token: env.BLOB_READ_WRITE_TOKEN });
 		if (!blob) return [];
 
-		const downloadUrl = blob.downloadUrl || blob.url;
-		const response = await fetch(downloadUrl);
+		const signedUrl = await getDownloadUrl(blob.url);
+		const response = await fetch(signedUrl);
 		if (!response.ok) return [];
 
 		const data = await response.json();
@@ -82,7 +82,8 @@ async function saveBlessings(blessings: StoredBlessing[]): Promise<void> {
 	await put(BLOB_FILENAME, JSON.stringify(blessings, null, '\t'), {
 		token: env.BLOB_READ_WRITE_TOKEN,
 		access: 'private',
-		contentType: 'application/json'
+		contentType: 'application/json',
+		allowOverwrite: true
 	});
 }
 
