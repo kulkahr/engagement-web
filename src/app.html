@@ -10,6 +10,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 		<meta name="format-detection" content="telephone=yes" />
 		<meta name="text-scale" content="scale" />
+		<title>Engagement Invitation</title>
 		<!-- Fonts self-hosted — see src/app.css for @font-face declarations -->
 		<link rel="manifest" href="/manifest.json" />
 		<!-- Preload LCP image and critical fonts -->
@@ -33,7 +34,7 @@
 					if (reg) {
 						chain.push(reg.unregister());
 					}
-					if ('caches' in window) {
+					if ('caches' in globalThis) {
 						chain.push(
 							caches.keys().then(function(keys) {
 								return Promise.all(keys.map(function(k) { return caches.delete(k); }));
@@ -96,7 +97,7 @@
 			// Preview mode (`vite preview`, port 4173) and production work fine
 			// since they serve the bundled output.
 			if ('serviceWorker' in navigator && location.port !== '5173') {
-				window.addEventListener('load', function() {
+				globalThis.addEventListener('load', function() {
 					navigator.serviceWorker.register('/service-worker.js').then(function(reg) {
 						// First visit — no update listeners needed
 						if (reg.active && !navigator.serviceWorker.controller) {

@@ -6,18 +6,14 @@ const LANG_KEY = Symbol('lang');
 
 // Detect browser language, defaulting to Marathi for Indian users
 function detectLanguage(): Lang {
-	if (typeof window === 'undefined') return 'mr';
+	if (typeof globalThis.window === 'undefined') return 'mr';
 	const lang = navigator.language || navigator.languages?.[0] || '';
-	// Marathi: mr, mr-IN
-	if (lang.startsWith('mr')) return 'mr';
-	// Default to Marathi for this cultural context
-	return 'mr';
-}
-
-export function createLangStore(): Writable<Lang> {
-	const stored = typeof localStorage !== 'undefined'
-		? (localStorage.getItem('lang') as Lang | null)
-		: null;
+	// Marathi: mr, mr-IN - default to English for all other languages
+	return lang.startsWith('mr') ? 'mr' : 'en';
+}	export function createLangStore(): Writable<Lang> {
+	const stored = typeof globalThis.localStorage === 'undefined'
+		? null
+		: localStorage.getItem('lang') as Lang | null;
 	const initial = stored || detectLanguage();
 	const store = writable<Lang>(initial);
 

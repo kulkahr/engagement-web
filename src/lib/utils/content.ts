@@ -29,20 +29,20 @@ import type { Lang } from '$lib/data/content';
 	let result = template;
 
 	// Replace bilingual placeholders — maps to Marathi or English values
-	result = result.replace(/\{groom\}/g, lang === 'mr' ? TEMPLATE_DATA.groom : TEMPLATE_DATA.groom_en);
-	result = result.replace(/\{bride\}/g, lang === 'mr' ? TEMPLATE_DATA.bride : TEMPLATE_DATA.bride_en);
-	result = result.replace(/\{venue\}/g, TEMPLATE_DATA.venue);
-	result = result.replace(/\{location\}/g, TEMPLATE_DATA.location);
-	result = result.replace(/\{date\}/g, TEMPLATE_DATA.date);
-	result = result.replace(/\{panchang\}/g, TEMPLATE_DATA.panchang);
-	result = result.replace(/\{groom_father\}/g, TEMPLATE_DATA.groom_father);
-	result = result.replace(/\{bride_father\}/g, TEMPLATE_DATA.bride_father);
-	result = result.replace(/\{groom_father_name\}/g, TEMPLATE_DATA.groom_father_name);
-	result = result.replace(/\{bride_father_name\}/g, TEMPLATE_DATA.bride_father_name);
-	result = result.replace(/\{deadline\}/g, lang === 'mr' ? TEMPLATE_DATA.deadline_mr : TEMPLATE_DATA.deadline_en);
-	result = result.replace(/\{deadline_mr\}/g, TEMPLATE_DATA.deadline_mr);
-	result = result.replace(/\{deadline_en\}/g, TEMPLATE_DATA.deadline_en);
-	result = result.replace(/\{footer_hosts\}/g, lang === 'mr' ? TEMPLATE_DATA.footer_hosts_mr : TEMPLATE_DATA.footer_hosts_en);
+	result = result.replaceAll('{groom}', lang === 'mr' ? TEMPLATE_DATA.groom : TEMPLATE_DATA.groom_en);
+	result = result.replaceAll('{bride}', lang === 'mr' ? TEMPLATE_DATA.bride : TEMPLATE_DATA.bride_en);
+	result = result.replaceAll('{venue}', TEMPLATE_DATA.venue);
+	result = result.replaceAll('{location}', TEMPLATE_DATA.location);
+	result = result.replaceAll('{date}', TEMPLATE_DATA.date);
+	result = result.replaceAll('{panchang}', TEMPLATE_DATA.panchang);
+	result = result.replaceAll('{groom_father}', TEMPLATE_DATA.groom_father);
+	result = result.replaceAll('{bride_father}', TEMPLATE_DATA.bride_father);
+	result = result.replaceAll('{groom_father_name}', TEMPLATE_DATA.groom_father_name);
+	result = result.replaceAll('{bride_father_name}', TEMPLATE_DATA.bride_father_name);
+	result = result.replaceAll('{deadline}', lang === 'mr' ? TEMPLATE_DATA.deadline_mr : TEMPLATE_DATA.deadline_en);
+	result = result.replaceAll('{deadline_mr}', TEMPLATE_DATA.deadline_mr);
+	result = result.replaceAll('{deadline_en}', TEMPLATE_DATA.deadline_en);
+	result = result.replaceAll('{footer_hosts}', lang === 'mr' ? TEMPLATE_DATA.footer_hosts_mr : TEMPLATE_DATA.footer_hosts_en);
 
 	return result;
 }

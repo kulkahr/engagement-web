@@ -115,7 +115,8 @@ async function main() {
 
 		photos = generatePhotoData(files);
 	} catch (err) {
-		console.error('❌ Failed to fetch from Drive:', err instanceof Error ? err.message : err);
+		const message = err instanceof Error ? err.message : String(err);
+		console.error('❌ Failed to fetch from Drive:', message);
 		console.log('   Generating empty gallery (photos can be added later)');
 		photos = [];
 	}
@@ -135,7 +136,9 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = ${JSON.stringify(photos, null, '\t
 	console.log(`   ${photos.length} photo(s)`);
 }
 
-main().catch((err) => {
+try {
+	await main();
+} catch (err) {
 	console.error('❌ Script failed:', err);
 	process.exit(1);
-});
+}
