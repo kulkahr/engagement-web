@@ -61,7 +61,7 @@
 	<meta name="description" content={renderContent(CONTENT[$lang].seo.description, $lang)} />
 	<meta property="og:title" content={renderContent(CONTENT[$lang].seo.title, $lang)} />
 	<meta property="og:description" content={renderContent(CONTENT[$lang].seo.description, $lang)} />
-	<meta property="og:image" content="{SITE_CONFIG.siteUrl}{ENV_IMAGE_OG}" />
+	<meta property="og:image" content="{ENV_IMAGE_OG.startsWith('http') ? ENV_IMAGE_OG : SITE_CONFIG.siteUrl + ENV_IMAGE_OG}" />
 	<meta property="og:type" content="website" />
 	<meta name="twitter:card" content="summary_large_image" />
 {@html `<script type="application/ld+json">${JSON.stringify({

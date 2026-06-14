@@ -7,14 +7,12 @@ const config = {
 	},
 	kit: {
 		adapter: adapter(),
-		// Ignore missing images that are now served via the /api/images/ proxy from Vercel Blob
-		// These files were removed from static/ to avoid committing PII to git.
+		// Ignore prerender errors for PII images removed from static/ and now served from Vercel Blob
 		prerender: {
 			handleHttpError: ({ path, status }) => {
-				// Only allow 404s for the specific files migrated to Vercel Blob
 				if (status !== 404) throw new Error(`${status} ${path}`);
-				const imagesServedViaApi = ['/images/monogram.webp', '/images/monogram.png', '/images/og-image.svg'];
-				if (imagesServedViaApi.includes(path)) return;
+				const imagesServedViaBlob = ['/images/monogram.webp', '/images/monogram.png', '/images/og-image.svg'];
+				if (imagesServedViaBlob.includes(path)) return;
 				throw new Error(`404 ${path}`);
 			}
 		}

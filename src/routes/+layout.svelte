@@ -47,7 +47,7 @@
 	<meta property="og:url" content="{SITE_CONFIG.siteUrl}{$page.url.pathname}" />
 	<meta property="og:title" content="हृषिकेश × वेदांगी — साखरपुडा निमंत्रण" />
 	<meta property="og:description" content="हृषिकेश आणि वेदांगीच्या साखरपुडा समारंभात आपले सादर सप्रेम निमंत्रण | दि. ८ ऑगस्ट २०२६, डोंबिवली" />
-	<meta property="og:image" content="{SITE_CONFIG.siteUrl}{ENV_IMAGE_OG}" />
+	<meta property="og:image" content="{ENV_IMAGE_OG.startsWith('http') ? ENV_IMAGE_OG : SITE_CONFIG.siteUrl + ENV_IMAGE_OG}" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
 	<meta property="og:image:type" content="image/svg+xml" />
