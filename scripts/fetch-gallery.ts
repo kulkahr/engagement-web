@@ -115,8 +115,7 @@ async function main() {
 
 		photos = generatePhotoData(files);
 	} catch (err) {
-		const message = err instanceof Error ? err.message : String(err);
-		console.error('❌ Failed to fetch from Drive:', message);
+		console.error('❌ Failed to fetch from Drive. Check internet connection and API key.');
 		console.log('   Generating empty gallery (photos can be added later)');
 		photos = [];
 	}

@@ -6,12 +6,12 @@ const LANG_KEY = Symbol('lang');
 
 // Detect browser language, defaulting to Marathi for Indian users
 function detectLanguage(): Lang {
-	if (typeof globalThis.window === 'undefined') return 'mr';
+	if (globalThis.window === undefined) return 'mr';
 	const lang = navigator.language || navigator.languages?.[0] || '';
 	// Marathi: mr, mr-IN - default to English for all other languages
 	return lang.startsWith('mr') ? 'mr' : 'en';
 }	export function createLangStore(): Writable<Lang> {
-	const stored = typeof globalThis.localStorage === 'undefined'
+	const stored = globalThis.localStorage === undefined
 		? null
 		: localStorage.getItem('lang') as Lang | null;
 	const initial = stored || detectLanguage();

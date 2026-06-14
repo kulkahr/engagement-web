@@ -154,8 +154,7 @@ function generateSitemapXml(routes: RouteEntry[]): string {
 		lines.push('');
 	}
 
-	lines.push('</urlset>');
-	lines.push('');
+	lines.push('</urlset>', '');
 
 	return lines.join('\n');
 }
