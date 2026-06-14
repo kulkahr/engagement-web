@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { SITE_CONFIG } from '$lib/data/config';
-import { put, head, getDownloadUrl } from '@vercel/blob';
+import { put, head } from '@vercel/blob';
 import { env } from '$env/dynamic/private';
 
 const CSV_FILENAME = 'rsvp-data.csv';
@@ -91,8 +91,7 @@ async function appendToCsv(row: string): Promise<void> {
 	try {
 		const existingBlob = await head(CSV_FILENAME, { token: env.BLOB_READ_WRITE_TOKEN });
 		if (existingBlob) {
-			const signedUrl = await getDownloadUrl(existingBlob.url);
-			const response = await fetch(signedUrl);
+			const response = await fetch(existingBlob.url);
 			if (response.ok) {
 				existingContent = await response.text();
 			}
@@ -108,8 +107,9 @@ async function appendToCsv(row: string): Promise<void> {
 
 	await put(CSV_FILENAME, newContent, {
 		token: env.BLOB_READ_WRITE_TOKEN,
-		access: 'private',
-		contentType: 'text/csv'
+		access: 'public',
+		contentType: 'text/csv',
+		allowOverwrite: true
 	});
 }
 
