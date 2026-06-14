@@ -1,6 +1,6 @@
 # Session Context — Resume Here
 
-> Updated at 14 June 2026 — Site live on hrishi.org.in — Private blob store fixes — Image proxy removed — Public blob URLs for images
+> Updated at 14 June 2026 — Site live on hrishi.org.in — Public blob store fixes — Client-side nav fix — All APIs verified working
 
 ## 🚀 What Was Completed This Session
 
@@ -107,13 +107,25 @@
 | Blessings `access: 'public'` fix | `put()` was using `access: 'public'` on a private store → changed to `access: 'private'` |
 | RSVP `access: 'public'` fix | Same fix in `appendToCsv()` — changed to `access: 'private'` |
 | `allowOverwrite: true` added | `saveBlessings()` reads existing data then writes back — needed `allowOverwrite: true` for second+ submissions |
-| `getDownloadUrl()` for reads | All blob reads (`head()` + `fetch(blob.url)`) replaced with `getDownloadUrl(blob.url)` — generates proper signed URLs for private stores |
+| `getDownloadUrl()` for reads | All blob reads (`head()` + `fetch(blob.url)`) replaced with `getDownloadUrl(blob.url)` — signed URLs for private stores |
 | Image proxy removed | `src/routes/api/images/[...path]/+server.ts` deleted — no longer needed |
 | Permanent public blob URLs | Images re-uploaded to a public blob store with `access: 'public'` — permanent non-expiring URLs |
-| `og:image` URL fix | `ENV_IMAGE_OG` is now a full URL → `og:image` meta tags use ternary to avoid double-prepending `SITE_CONFIG.siteUrl` |
+| `og:image` URL fix | `ENV_IMAGE_OG` is now a full URL → `og:image` meta tags use ternary |
 | `vercel.json` CSP updated | Added `blob.vercel-storage.com` to `img-src` |
 | `app.html` preload updated | Preload href changed from `/api/images/monogram.webp` to full public blob URL |
 | `.gitignore` updated | PII images + upload scripts added |
+
+### Sprint Z — Public Blob Store & Client-Side Nav Fix
+| Task | Description |
+|------|-------------|
+| `access: 'private'` → `'public'` | Token now points to a public blob store — `access:'public'` works directly |
+| `getDownloadUrl()` → `fetch(blob.url)` | Public blob URLs are directly accessible — no signed URL needed |
+| `allowOverwrite: true` added to RSVP | RSVP `appendToCsv()` was missing `allowOverwrite: true` — same bug as Blessings |
+| Debug error messages | Added actual error details to API 500 responses for debugging |
+| Client-side nav visibility fix | Layout IntersectionObserver ran before async data loaded → disconnected. Removed `reveal` class from dynamically-added `blessing-item` divs (they already have `fadeInUp` animation). Replaced CSS delay classes with inline `animation-delay` styles. |
+| Blessings API verified | POST returns 200, GET returns submitted data, count badge shows correctly |
+| RSVP API verified | POST returns 200 (no more errors) |
+| Monogram loading verified | Checked via browser — loads from public blob URL, no errors |
 
 ---
 

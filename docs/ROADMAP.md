@@ -146,14 +146,23 @@
 - [x] Both domains verified and SSL auto-provisioned
 
 ### Sprint Y: Private Blob Store Fixes & Image Proxy Removal
-- [x] Blessings/RSVP put() — changed from `access: 'public'` to `access: 'private'` (private store rejects public)
+- [x] Blessings/RSVP put() — changed from `access: 'public'` to `access: 'private'`
 - [x] `allowOverwrite: true` — added for overwriting existing blessings JSON file
-- [x] All blob reads — switched from `fetch(blob.url)` to `getDownloadUrl(blob.url)` (signed URLs for private stores)
+- [x] All blob reads — switched from `fetch(blob.url)` to `getDownloadUrl(blob.url)`
 - [x] Image proxy endpoint — deleted (no longer needed)
 - [x] Images re-uploaded to public blob store with permanent URLs
-- [x] `og:image` meta tags — handle full blob URLs (ternary with `startsWith('http')`)
+- [x] `og:image` meta tags — handle full blob URLs (ternary)
 - [x] CSP updated — `blob.vercel-storage.com` in `img-src`
 - [x] Environment vars — `PUBLIC_IMAGE_*` now point to full public blob URLs
+
+### Sprint Z: Public Blob Store Access & Client-Side Nav Fix
+- [x] `access: 'private'` → `'public'` — token now points to public store
+- [x] `getDownloadUrl()` → `fetch(blob.url)` — public blobs don't need signed URLs
+- [x] `allowOverwrite: true` added to RSVP `put()` — missing, same bug as Blessings
+- [x] Client-side nav fix — removed `reveal` class from dynamically-loaded blessings (IntersectionObserver disconnects before async data loads)
+- [x] Blessings API verified working — POST 200, GET returns data, count badge shows
+- [x] RSVP API verified working — POST 200
+- [x] Monogram loading verified — direct from public blob URL
 
 ---
 

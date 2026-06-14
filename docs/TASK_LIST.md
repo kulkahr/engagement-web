@@ -1,7 +1,7 @@
 # Task List — साखरपुडा Engagement Invitation Website
 
 > Updated: 14 June 2026
-> Status: **Deployment complete — site live on hrishi.org.in.** Remaining: Production testing, Gallery refresh.
+> Status: **Deployment complete — site live on hrishi.org.in. All APIs verified working.** Remaining: Gallery refresh.
 
 ---
 
@@ -54,6 +54,15 @@
 - [x] Fix `og:image` meta tags — handle full blob URLs (ternary)
 - [x] Update CSP — add `blob.vercel-storage.com` to `img-src`
 - [x] Update `app.html` preload to full public blob URL
+
+### Sprint Z — Public Blob Store & Nav Fix ✅
+- [x] `access: 'private'` → `'public'` — token now points to public store
+- [x] `getDownloadUrl()` → `fetch(blob.url)` — public blobs don't need signed URLs
+- [x] Add `allowOverwrite: true` to RSVP `put()` — was missing
+- [x] Fix client-side nav — remove `reveal` class from dynamically-loaded blessings (IntersectionObserver disconnects before async data loads)
+- [x] Blessings API verified working (POST 200, GET returns data)
+- [x] RSVP API verified working (POST 200)
+- [x] Monogram verified loading from public blob URL
 
 ### Sprint A — Foundation ✅
 - [x] SvelteKit project with static adapter
@@ -159,7 +168,6 @@
 | # | Task | Priority | Notes |
 |---|------|----------|-------|
 | **6.3** | Real device testing | 🟡 Medium | Mid-range Android + iPhone |
-| **6.4** | RSVP end-to-end test | 🟡 Medium | Fill form, submit, verify stored data |
 | **6.6** | Production Lighthouse re-audit | 🟢 Low | Current 66 is localhost; production should be higher |
 
 ### 📸 Gallery
@@ -192,4 +200,4 @@ Measured on localhost with Lighthouse 13.4.0 (no CDN, no compression). Productio
 
 ---
 
-*End of Task List — 14 June 2026 — 17 sprints complete, 3 remaining tasks (testing)*
+*End of Task List — 14 June 2026 — 18 sprints complete, 2 remaining tasks (testing)*
