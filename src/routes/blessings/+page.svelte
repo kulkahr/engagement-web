@@ -211,7 +211,7 @@
 				</div>
 			{:else}
 				{#each messages as msg, i}
-					<div class="blessing-item card reveal delay-{(i+3) as number}">
+					<div class="blessing-item card" style="animation-delay: {i * 0.1}s">
 						<p class="blessing-text">"{msg.text}"</p>
 						<div class="blessing-meta">
 							<span class="blessing-name">{msg.name}</span>
