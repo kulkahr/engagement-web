@@ -1,0 +1,10 @@
+# Allow all crawlers on public pages
+User-agent: *
+Allow: /
+
+# Block admin and API endpoints from crawling
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://hrishi.org.in/sitemap.xml

@@ -1,0 +1,104 @@
+#!/bin/sh
+# ═══════════════════════════════════════════════════════════
+# PII Pre-Commit Hook — Blocks commits containing personal data
+# ═══════════════════════════════════════════════════════════
+# This hook scans staged files for patterns that look like
+# hardcoded personal identifiable information (PII) in source code.
+#
+# False positive? Add an exception below or use --no-verify to skip.
+# ═══════════════════════════════════════════════════════════
+
+echo "🔍 Checking for hardcoded PII in staged files..."
+
+# ── Config ────────────────────────────────────────────────
+# Files that are allowed to contain PII (e.g. env files, docs)
+ALLOWED_PATTERNS="\.env|\.md$|docs/|README"
+
+# Source files to check (typescript, svelte, html, js, json)
+SOURCE_PATTERNS="\.(ts|svelte|html|js|json|css)$"
+
+# ── PII Patterns ──────────────────────────────────────────
+# These match hardcoded personal data in source code.
+
+# Specific Indian phone numbers (+91-XXXXXXXXXX pattern)
+PHONE_PATTERN='\+91-[0-9]{10}'
+
+# Email addresses (personal-looking)
+EMAIL_PATTERN='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+
+# Hardcoded postal addresses with common Indian patterns
+ADDRESS_PATTERN='(Road|Nagar|Colony|Society|Chowk|Marg|Apartments|Building)\s*[,:]'
+
+# Geographic coordinates (lat/lng pairs)
+COORDS_PATTERN='"lat":\s*-?[0-9]+\.[0-9]+'
+
+# ═══════════════════════════════════════════════════════════
+
+has_pii=0
+
+# Get list of staged files
+staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+
+if [ -z "$staged_files" ]; then
+    echo "✅ No staged files to check."
+    exit 0
+fi
+
+for file in $staged_files; do
+    # Skip allowed files
+    echo "$file" | grep -Eq "$ALLOWED_PATTERNS" && continue
+
+    # Only check source files
+    echo "$file" | grep -Eq "$SOURCE_PATTERNS" || continue
+
+    # Get the staged content
+    content=$(git show :"$file" 2>/dev/null)
+
+    if [ -z "$content" ]; then
+        continue
+    fi
+
+    # Check for phone numbers
+    if echo "$content" | grep -Eq "$PHONE_PATTERN"; then
+        echo "⚠️  PII DETECTED: Phone number found in $file"
+        echo "$content" | grep -En "$PHONE_PATTERN" | head -3
+        has_pii=1
+    fi
+
+    # Check for personal email addresses (not example.com)
+    if echo "$content" | grep -Eq "$EMAIL_PATTERN"; then
+        emails=$(echo "$content" | grep -Eo "$EMAIL_PATTERN" | grep -v 'example\.com' | head -3)
+        if [ -n "$emails" ]; then
+            echo "⚠️  PII DETECTED: Email address found in $file"
+            echo "$emails"
+            has_pii=1
+        fi
+    fi
+
+    # Check for hardcoded addresses
+    if echo "$content" | grep -Eq "$ADDRESS_PATTERN"; then
+        echo "⚠️  PII DETECTED: Possible address found in $file"
+        echo "$content" | grep -En "$ADDRESS_PATTERN" | head -3
+        has_pii=1
+    fi
+
+    # Check for coordinates
+    if echo "$content" | grep -Eq "$COORDS_PATTERN"; then
+        echo "⚠️  PII DETECTED: Geographic coordinates found in $file"
+        echo "$content" | grep -En "$COORDS_PATTERN" | head -3
+        has_pii=1
+    fi
+done
+
+if [ "$has_pii" -eq 1 ]; then
+    echo ""
+    echo "❌ Commit BLOCKED: Potential PII detected in staged files."
+    echo "   Review the warnings above and either:"
+    echo "   1. Move the data to env vars (preferred)"
+    echo "   2. Add the file to ALLOWED_PATTERNS in .husky/pre-commit"
+    echo "   3. Use git commit --no-verify to bypass (not recommended)"
+    exit 1
+fi
+
+echo "✅ No PII detected — continuing commit."
+exit 0

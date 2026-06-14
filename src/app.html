@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="mr" translate="no">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<meta name="color-scheme" content="light" />
+		<meta name="google" content="notranslate" />
+		<meta name="theme-color" content="#2F5A3D" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+		<meta name="format-detection" content="telephone=yes" />
+		<meta name="text-scale" content="scale" />
+		<!-- Fonts self-hosted — see src/app.css for @font-face declarations -->
+		<link rel="manifest" href="/manifest.json" />
+		<!-- Preload LCP image and critical fonts -->
+		<link rel="preload" href="/images/monogram.webp" as="image" type="image/webp" />
+		<link rel="preload" href="/fonts/NotoSerifDevanagari-Bold.ttf" as="font" type="font/ttf" crossorigin />
+		<link rel="preload" href="/fonts/NotoSerifDevanagari-Regular.ttf" as="font" type="font/ttf" crossorigin />
+		<script>
+			// ── Stale SW Cleanup ──────────────────────────────────
+			// After deployment, the old service worker may still control the page
+			// and serve cached JavaScript from a previous build. If those cached
+			// JS files reference build-time constants (like __SVELTEKIT_APP_VERSION__)
+			// that no longer exist as runtime globals, the page crashes.
+			// 
+			// This guard detects stale SW control, unregisters the old SW,
+			// clears all caches, and reloads — getting a fresh load from network.
+			// sessionStorage prevents infinite reload loops.
+			if ('serviceWorker' in navigator && navigator.serviceWorker.controller && !sessionStorage.getItem('sw:cleaned')) {
+				sessionStorage.setItem('sw:cleaned', '1');
+				navigator.serviceWorker.getRegistration().then(function(reg) {
+					var chain = [];
+					if (reg) {
+						chain.push(reg.unregister());
+					}
+					if ('caches' in window) {
+						chain.push(
+							caches.keys().then(function(keys) {
+								return Promise.all(keys.map(function(k) { return caches.delete(k); }));
+							})
+						);
+					}
+					return Promise.all(chain);
+				}).then(function() {
+					window.location.reload();
+				});
+			}
+
+			// ── Update Toast ─────────────────────────────────────
+			// Shows a brief notification when a new version is deployed,
+			// then reloads the page so the user gets fresh content.
+			var updateToastTimer = null;
+			function showUpdateToast() {
+				if (updateToastTimer) return;  // Already showing
+
+				var toast = document.createElement('div');
+				toast.setAttribute('role', 'status');
+				toast.setAttribute('aria-live', 'polite');
+				toast.innerHTML = '<span style="font-size:18px">✨</span> Updated — reloading...';
+				Object.assign(toast.style, {
+					position: 'fixed',
+					top: '24px',
+					left: '50%',
+					transform: 'translateX(-50%) translateY(0)',
+					background: '#2F5A3D',
+					color: '#FFFFFF',
+					padding: '14px 28px',
+					borderRadius: '999px',
+					boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+					fontFamily: 'system-ui, sans-serif',
+					fontSize: '16px',
+					fontWeight: '600',
+					zIndex: '99999',
+					whiteSpace: 'nowrap',
+					cursor: 'pointer'
+				});
+				toast.onclick = function() { window.location.reload(); };
+				document.body.appendChild(toast);
+
+				// Animate in with CSS keyframes (reliable across browsers)
+				var style = document.createElement('style');
+				style.textContent = '@keyframes swToastIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
+				document.head.appendChild(style);
+				toast.style.animation = 'swToastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+
+				// Reload after a brief pause so user sees the toast
+				updateToastTimer = setTimeout(function() {
+					window.location.reload();
+				}, 2000);
+			}
+
+			// ── Service Worker Registration ──────────────────────
+			// Note: In dev mode (Vite dev server, default port 5173), the SW file is
+			// served as an ES module proxy (`import '/@fs/...'`) which service workers
+			// cannot execute. Skip registration in dev to avoid console errors.
+			// Preview mode (`vite preview`, port 4173) and production work fine
+			// since they serve the bundled output.
+			if ('serviceWorker' in navigator && location.port !== '5173') {
+				window.addEventListener('load', function() {
+					navigator.serviceWorker.register('/service-worker.js').then(function(reg) {
+						// First visit — no update listeners needed
+						if (reg.active && !navigator.serviceWorker.controller) {
+							return;
+						}
+						// Subsequent visits: register update notification listeners.
+						// These run AFTER the first-visit guard, so they won't
+						// fire a false toast on the user's first ever visit.
+						reg.addEventListener('updatefound', function() {
+							var newSW = reg.installing;
+							if (!newSW) return;
+							newSW.addEventListener('statechange', function() {
+								if (newSW.state === 'activated') {
+									showUpdateToast();
+								}
+							});
+						});
+						navigator.serviceWorker.addEventListener('message', function(event) {
+							if (event.data && event.data.type === 'sw:activated') {
+								showUpdateToast();
+							}
+						});
+						navigator.serviceWorker.addEventListener('controllerchange', function() {
+							showUpdateToast();
+						});
+					});
+				});
+			}
+		</script>
+		<!-- Open Graph / Social Sharing — injected dynamically via +layout.svelte -->
+		<meta property="og:type" content="website" />
+		<script>
+			// Update OG URLs to match the current deployment origin.
+			// This ensures Vercel preview deployments (e.g. project-name-123.vercel.app)
+			// have correct og:url and og:image for social media preview cards.
+			// Uses DOMContentLoaded so OG meta tags from layout are already in the DOM.
+			// Note: productionUrl must match SITE_CONFIG.siteUrl in src/lib/data/config.ts
+			document.addEventListener('DOMContentLoaded', function() {
+				var origin = location.origin;
+				var productionUrl = 'https://hrishi.org.in';
+				if (origin !== productionUrl) {
+					document.querySelectorAll('meta[property="og:url"], meta[property="og:image"]').forEach(function(meta) {
+						meta.setAttribute('content', meta.getAttribute('content').replace(productionUrl, origin));
+					});
+				}
+			});
+		</script>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/images/icon-192.png" />
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>

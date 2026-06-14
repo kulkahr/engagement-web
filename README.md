@@ -1,4 +1,4 @@
-# साखरपुडा — Hrishikesh × Vedangi Engagement Invitation
+# साखरपुडा — Engagement Invitation
 
 A bilingual (Marathi/English) static engagement invitation website built with SvelteKit. Features botanical Maharashtrian minimal design, RSVP management with CSV storage, Google Drive photo gallery, offline PWA support, and India-only geo-restriction.
 
@@ -43,6 +43,10 @@ A bilingual (Marathi/English) static engagement invitation website built with Sv
 # Install dependencies
 npm install
 
+# Set up environment variables (copy template and fill in)
+cp .env.example .env
+# Then edit .env with your values
+
 # Start dev server
 npm run dev
 
@@ -52,6 +56,10 @@ npm run build
 # Preview production build
 npm run preview
 ```
+
+### Environment Variables
+
+Copy `.env.example` to `.env` and fill in the values. See below for where to get each one.
 
 ### Gallery Photos
 
@@ -126,6 +134,8 @@ src/
 | `BLOB_READ_WRITE_TOKEN` | Vercel Blob storage token (enable Blob in dashboard) |
 | `RSVP_ADMIN_SECRET` | Password for the admin CSV download page |
 | `GOOGLE_DRIVE_API_KEY` | API key for build-time gallery photo fetch |
+| `PUBLIC_PHONE_GROOM_FATHER` | Groom's father's phone (public on website) |
+| `PUBLIC_PHONE_BRIDE_FATHER` | Bride's father's phone (public on website) |
 
 3. **`vercel.json`** is pre-configured with:
    - Build output directory: `build`
@@ -145,13 +155,15 @@ src/
 
 ## Event Details
 
-| Detail | Info |
-|--------|------|
-| **Couple** | Hrishikesh Kulkarni × Vedangi Kale |
-| **Ceremony** | साखरपुडा (Engagement) |
-| **Date** | 8 August 2026, 6:00 PM |
-| **Venue** | Brahman Sabha Hall, Tilak Road, Dombivli East |
-| **RSVP deadline** | 1 August 2026 |
+All event details are configured via environment variables — see `.env.example` for the full schema. Key env vars:
+
+| Variable | Description |
+|----------|-------------|
+| `PUBLIC_COUPLE` | Couple names (Marathi + English) |
+| `PUBLIC_EVENT` | Event type, date, time, panchang |
+| `PUBLIC_VENUE` | Venue name, address, coordinates, maps |
+| `PUBLIC_CONTACTS` | Contact persons with relationships |
+| `PUBLIC_RSVP_DEADLINE_*` | RSVP deadline dates |
 
 ## Commands
 

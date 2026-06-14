@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FBF9F3"/>
+      <stop offset="100%" stop-color="#F5F1E8"/>
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C7A97A"/>
+      <stop offset="100%" stop-color="#B08D57"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Subtle lotus watermark -->
+  <text x="1050" y="180" font-size="200" opacity="0.04" fill="#2F5A3D">🪷</text>
+  <text x="80" y="520" font-size="140" opacity="0.03" fill="#2F5A3D" transform="rotate(-10 80 520)">🪷</text>
+
+  <!-- Thin decorative frame -->
+  <rect x="30" y="30" width="1140" height="570" rx="14" fill="none" stroke="#ECE7DA" stroke-width="1.5"/>
+
+  <!-- Top botanical accent line -->
+  <line x1="450" y1="70" x2="750" y2="70" stroke="url(#goldAccent)" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Sacred text -->
+  <text x="600" y="160" text-anchor="middle" font-family="'Noto Serif Devanagari', serif" font-size="22" fill="#7B837D" letter-spacing="6" font-weight="500">|| श्री गणेशाय नमः ||</text>
+
+  <!-- Subtle gold divider -->
+  <line x1="520" y1="190" x2="680" y2="190" stroke="url(#goldAccent)" stroke-width="1" opacity="0.4"/>
+
+  <!-- Couple names -->
+  <text x="600" y="290" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="66" fill="#2F5A3D" font-weight="700" letter-spacing="2">Hrishikesh × Vedangi</text>
+
+  <!-- Engagement label -->
+  <text x="600" y="350" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="#55635A" letter-spacing="8" font-weight="400">ENGAGEMENT</text>
+
+  <!-- Bottom divider -->
+  <line x1="500" y1="390" x2="700" y2="390" stroke="url(#goldAccent)" stroke-width="1" opacity="0.4"/>
+
+  <!-- Event details -->
+  <text x="600" y="440" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#7B837D" letter-spacing="2" font-weight="500">८ ऑगस्ट २०२६  •  डोंबिवली</text>
+  <text x="600" y="475" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#7B837D" letter-spacing="1" font-weight="400">8 August 2026  •  Dombivli</text>
+
+  <!-- Bottom decorative dots -->
+  <circle cx="580" cy="530" r="3" fill="#B08D57" opacity="0.4"/>
+  <circle cx="600" cy="530" r="3" fill="#2F5A3D" opacity="0.5"/>
+  <circle cx="620" cy="530" r="3" fill="#B08D57" opacity="0.4"/>
+
+  <!-- Corner botanical accents -->
+  <path d="M45 55 Q45 45 55 45" stroke="#2F5A3D" stroke-width="1.5" fill="none" opacity="0.15"/>
+  <path d="M1155 55 Q1155 45 1145 45" stroke="#2F5A3D" stroke-width="1.5" fill="none" opacity="0.15"/>
+  <path d="M45 575 Q45 585 55 585" stroke="#2F5A3D" stroke-width="1.5" fill="none" opacity="0.15"/>
+  <path d="M1155 575 Q1155 585 1145 585" stroke="#2F5A3D" stroke-width="1.5" fill="none" opacity="0.15"/>
+</svg>
