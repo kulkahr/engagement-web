@@ -10,7 +10,7 @@
 | Framework | **SvelteKit** | 2.x | Minimal JS, excellent DX, static export, Svelte 5 runes |
 | Language | **TypeScript** | 6.x | Type safety, better DX, catches errors at build time |
 | Styling | **Vanilla CSS** | — | Zero runtime, no build dependency, full control, smallest bundle |
-| Static Adapter | **@sveltejs/adapter-static** | 3.x | Generates pure static HTML/JS/CSS output |
+| Adapter | **@sveltejs/adapter-auto** (adapter-vercel on Vercel) | 7.x | Auto-detects Vercel, serverless functions for API routes + static pages |
 | Hosting | **Vercel** (Edge Middleware) | — | Free tier, global CDN, geo-restriction, Blob storage |
 | RSVP Storage | **Vercel Blob** (CSV) | — | Serverless, append-only, easy download |
 | Photo Source | **Google Drive** (API v3) | — | Free, already in user's ecosystem, build-time fetch |
@@ -182,4 +182,4 @@
 
 ---
 
-*End of Tech Stack Analysis — Updated 16 June 2026 — Performance metrics measured on localhost (no CDN).*
+*End of Tech Stack Analysis — Updated 14 June 2026 — Performance metrics measured on localhost (no CDN).*

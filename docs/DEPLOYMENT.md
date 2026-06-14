@@ -3,7 +3,7 @@
 > **Domain:** `hrishi.org.in` (purchased via GoDaddy)
 > **Hosting:** Vercel (Hobby — free tier)
 > **Storage:** Vercel Blob (RSVP CSV + Blessings JSON)
-> **Last updated:** 16 June 2026
+> **Last updated:** 14 June 2026
 
 ---
 
@@ -43,17 +43,24 @@ git push -u origin main
 5. Click **Deploy** — the first deploy will fail without env vars, that's expected
 6. Once the project is created, go to **Project Settings → Environment Variables**
 
+> **Adapter note:** The project uses `@sveltejs/adapter-auto` which detects Vercel at build time and delegates to `@sveltejs/adapter-vercel`. This produces serverless functions for API routes while still pre-rendering static pages. Do **not** set `outputDirectory` in `vercel.json` — the adapter handles output automatically.
+
 ---
 
 ## Step 3: Set Environment Variables
 
-Add these three variables in **Vercel Dashboard → Project Settings → Environment Variables**:
+Add these variables in **Vercel Dashboard → Project Settings → Environment Variables**:
 
 | Name | Value | Scope |
 |------|-------|-------|
 | `BLOB_READ_WRITE_TOKEN` | From Vercel Storage → Blob → Create token | Production |
 | `RSVP_ADMIN_SECRET` | A strong password of your choice | Production |
 | `GOOGLE_DRIVE_API_KEY` | From Google Cloud Console (optional, for gallery rebuilds) | Production |
+| `PUBLIC_IMAGE_MONOGRAM` | `/api/images/monogram.webp` | Production |
+| `PUBLIC_IMAGE_MONOGRAM_FALLBACK` | `/api/images/monogram.png` | Production |
+| `PUBLIC_IMAGE_OG` | `/api/images/og-image.svg` | Production |
+
+> **Image proxy:** PII images (monogram, OG) are served via the `/api/images/` proxy endpoint which fetches from a private Vercel Blob store using `@vercel/blob`. The private blob URL/token never reaches the client. Images must be uploaded to the blob store before deployment.
 
 After setting vars, redeploy: either push a commit, or go to **Deployments → ⋮ → Redeploy**.
 

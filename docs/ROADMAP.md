@@ -130,6 +130,21 @@
 - [x] Updated `sonar-project.properties` with quality gate reference
 - [x] Final scan: **0 hotspots, 3 code smells** ✅
 
+### Sprint W: Vercel Blob Image Proxy & PII Removal
+- [x] Created image proxy endpoint `src/routes/api/images/[...path]/+server.ts`
+- [x] Removed PII images (monogram.webp, monogram.png, og-image.svg) from git
+- [x] Updated `.gitignore` to prevent re-adding PII images
+- [x] Created upload script → user uploaded to private Vercel Blob → script deleted
+- [x] Added `handleHttpError` in svelte.config.js for missing static images
+- [x] Fixed blob path (root level, not `images/` subdirectory)
+
+### Sprint X: Adapter Switch & Domain Deploy
+- [x] Switched from `@sveltejs/adapter-static` → `@sveltejs/adapter-auto` (with `adapter-vercel`)
+- [x] Removed `outputDirectory` from `vercel.json`
+- [x] Added `hrishi.org.in` + `www.hrishi.org.in` in Vercel
+- [x] Pointed DNS at GoDaddy (A record + CNAME)
+- [x] Both domains verified and SSL auto-provisioned
+
 ---
 
 ## 2. Milestones

@@ -2,7 +2,7 @@
 
 > **Domain:** `hrishi.org.in`
 > **Hosting:** Vercel (Hobby — free tier)
-> **Last updated:** 16 June 2026
+> **Last updated:** 14 June 2026
 
 ---
 
@@ -99,7 +99,8 @@ npm run build && npm run check
 |---------|---------|--------|
 | `svelte` | 5.56.3 | ✅ Latest |
 | `@sveltejs/kit` | 2.65.0 | ✅ Latest |
-| `@sveltejs/adapter-static` | 3.0.10 | ✅ Latest |
+| `@sveltejs/adapter-auto` | 7.0.1 | ✅ Latest |
+| `@sveltejs/adapter-vercel` | — | ✅ Installed |
 | `vite` | 8.0.16 | ✅ Latest |
 | `svelte-check` | 4.6.0 | ✅ Latest |
 | `typescript` | 6.0.3 | ✅ Latest |

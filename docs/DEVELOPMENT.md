@@ -2,7 +2,7 @@
 
 > **Domain:** `hrishi.org.in`
 > **Stack:** SvelteKit + TypeScript + Vanilla CSS + Vercel Blob
-> **Last updated:** 16 June 2026
+> **Last updated:** 14 June 2026
 
 ---
 
@@ -60,7 +60,7 @@ open http://localhost:5173
 
 | Variable | Required For | Where to Get |
 |----------|-------------|-------------|
-| `BLOB_READ_WRITE_TOKEN` | RSVP + Blessings API in dev mode | Vercel Dashboard → Storage → Blob |
+| `BLOB_READ_WRITE_TOKEN` | RSVP + Blessings + Image proxy API in dev mode | Vercel Dashboard → Storage → Blob |
 | `RSVP_ADMIN_SECRET` | Admin page CSV download in dev mode | Choose a password yourself |
 | `GOOGLE_DRIVE_API_KEY` | Gallery photo rebuild (`build:photos`) | Google Cloud Console |
 | `PUBLIC_PHONE_GROOM_FATHER` | Contact phone (public on website) | Your personal number |
@@ -104,13 +104,15 @@ src/
 │   ├── venue/              # Venue details + map links
 │   ├── gallery/            # Photo gallery with lightbox
 │   ├── blessings/          # Well-wishes messages
-│   └── admin/              # Password-protected CSV download
+│   ├── admin/              # Password-protected CSV download
+│   └── api/                # Serverless API endpoints
+│       └── images/[...path]/  # Image proxy from Vercel Blob
 ├── scripts/
 │   ├── fetch-gallery.ts    # Build-time Google Drive photo fetcher
 │   └── generate-sitemap.ts # Auto-generates sitemap.xml
 └── static/
     ├── fonts/              # Self-hosted Noto Serif Devanagari
-    ├── images/             # Monogram, icons, OG image
+    ├── images/             # Icons, placeholder (PII images served via blob proxy)
     ├── favicon.svg
     ├── manifest.json       # PWA manifest
     ├── robots.txt
@@ -208,7 +210,7 @@ npm run build
 The build pipeline:
 1. **Prebuild:** `scripts/generate-sitemap.ts` generates `static/sitemap.xml` with hreflang tags
 2. **SvelteKit build:** Compiles all pages, components, and scripts
-3. **Static export:** Outputs to `build/` directory (HTML + JS + CSS + assets)
+3. **Adapter:** `@sveltejs/adapter-auto` detects Vercel environment → uses `adapter-vercel` → produces serverless functions for API routes + static files for pages
 4. **Service worker:** Vite processes `src/service-worker.js` through `$service-worker` module
 
 Output: `build/` directory — ready to deploy to any static host.

@@ -1,7 +1,7 @@
 # Task List — साखरपुडा Engagement Invitation Website
 
-> Updated: 16 June 2026
-> Status: **All 14 sprints complete.** Remaining: Deployment, Production testing, Gallery refresh.
+> Updated: 14 June 2026
+> Status: **Deployment complete — site live on hrishi.org.in.** Remaining: Production testing, Gallery refresh.
 
 ---
 
@@ -135,45 +135,18 @@
 
 ## 📋 Remaining Tasks
 
-### 🚀 Deployment
-
-#### 5.1 — Push to GitHub & Import in Vercel
-| # | Task | Priority | Notes |
-|---|------|----------|-------|
-| **5.1a** | Create GitHub repo | 🔴 High | e.g., `engagement-web`, private or public |
-| **5.1b** | Push code | 🔴 High | `git remote add origin <url> && git push -u origin main` |
-| **5.1c** | Import in Vercel | 🔴 High | [Vercel Dashboard](https://vercel.com/new) → Import Git Repo → Select repo → Framework preset: SvelteKit |
-| **5.1d** | Set env vars in Vercel | 🔴 High | Settings → Environment Variables: `BLOB_READ_WRITE_TOKEN` (Vercel Blob), `RSVP_ADMIN_SECRET` (your choice), `GOOGLE_DRIVE_API_KEY` (optional, for gallery builds) |
-
-#### 5.2 — Configure Custom Domain (`hrishi.org.in`)
-| Step | Where | What To Do |
-|------|-------|------------|
-| **5.2a** | Vercel → Project Settings → Domains | Add `hrishi.org.in` and `www.hrishi.org.in` — Vercel will show the required DNS config |
-| **5.2b** | GoDaddy → DNS Settings | **Choose ONE method below:** |
-| | | |
-| | **Option A: A/CNAME Records (simpler, keep DNS at GoDaddy)** | |
-| | GoDaddy DNS: A Record | Point `@` (apex) → `76.76.21.21` (Vercel's IP) |
-| | GoDaddy DNS: CNAME Record | Point `www` → `cname.vercel-dns.com` |
-| | Remove any old A/AAAA/CNAME records for `@` or `www` | Avoid conflicts |
-| | | |
-| | **Option B: Vercel Nameservers (required for wildcard domains)** | |
-| | GoDaddy → Domain Settings → Nameservers | Change to: `ns1.vercel-dns.com`, `ns2.vercel-dns.com` |
-| | **⚠️ Before switching nameservers**, copy existing GoDaddy DNS records (MX, TXT, etc.) to Vercel DNS dashboard first | Prevents downtime for email, etc. |
-| | | |
-| **5.2c** | Wait for propagation | DNS can take minutes–48 hours; Vercel shows ✓ green when verified |
-| **5.2d** | Vercel auto-provisions SSL | No manual action — Vercel issues TLS cert automatically via Let's Encrypt |
-| **5.2e** | Configure redirects (optional) | Vercel → Domains → `www.hrishi.org.in` → Redirect to `hrishi.org.in` (or vice versa) |
-| **5.2f** | Update `allowedOrigins` in config.ts if needed | Already updated to include both `hrishi.org.in` and `www.hrishi.org.in` ✅ |
-
-#### 5.3 — Post-Deploy Verification
-| # | Task | Priority | Notes |
-|---|------|----------|-------|
-| **5.3a** | Verify all pages render | 🔴 High | Navigate all 6 pages, check no 404s |
-| **5.3b** | Test geo-restriction | 🟡 Medium | India IP works, non-India gets 403 |
-| **5.3c** | Test RSVP form submission | 🔴 High | Fill form, submit, verify data in Vercel Blob |
-| **5.3d** | Test Blessings API | 🟡 Medium | Submit a blessing, verify it persists |
-| **5.3e** | Test admin page CSV download | 🟡 Medium | Navigate to `/admin/`, enter secret, download |
-| **5.3f** | Run production Lighthouse audit | 🟢 Low | Should be significantly higher than localhost 66 |
+### ✅ Deployment (Complete)
+| # | Task | Status |
+|---|------|--------|
+| **5.1a** | Create GitHub repo | ✅ Done |
+| **5.1b** | Push code | ✅ Done |
+| **5.1c** | Import in Vercel | ✅ Done |
+| **5.1d** | Set env vars in Vercel | ✅ Done |
+| **5.2a** | Add domain in Vercel | ✅ Done (`hrishi.org.in` + `www` verified) |
+| **5.2b** | Point DNS at GoDaddy | ✅ Done (A + CNAME records) |
+| **5.2c** | SSL auto-provisioned | ✅ Done |
+| **5.3** | Blob image proxy | ✅ Done (images via `/api/images/`) |
+| **5.4** | Adapter switch | ✅ Done (`adapter-static` → `adapter-auto`) |
 
 ### 🧪 Testing
 | # | Task | Priority | Notes |
@@ -216,7 +189,7 @@ Measured on localhost with Lighthouse 13.4.0 (no CDN, no compression). Productio
 | `src/app.html` | HTML shell: OG tags, preloads, SW registration, cleanup, toast |
 | `src/app.css` | Design system + @font-face + keyframes |
 | `vercel.json` | Deployment config: CSP, HSTS, cache headers (4 rules) |
-| `svelte.config.js` | Adapter-static with `trailingSlash: 'always'` |
+| `svelte.config.js` | Adapter-auto (Vercel) with `trailingSlash: 'always'`, `handleHttpError` |
 | `docs/SRS.md` | Software requirements specification |
 | `docs/ARCHITECTURE.md` | System architecture document |
 | `docs/ROADMAP.md` | Sprint plan (1–14 complete) |

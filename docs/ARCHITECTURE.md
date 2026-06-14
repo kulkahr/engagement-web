@@ -50,7 +50,8 @@ src/
 │   └── api/
 │       ├── rsvp/+server.ts      # POST endpoint — stores RSVP in Vercel Blob CSV
 │       ├── rsvp/download/+server.ts  # GET endpoint — password-protected CSV download
-│       └── blessings/+server.ts  # GET/POST endpoint — list/submit blessings in Vercel Blob JSON
+│       ├── blessings/+server.ts  # GET/POST endpoint — list/submit blessings in Vercel Blob JSON
+│       └── images/[...path]/+server.ts  # GET — image proxy from Vercel Blob (monogram, OG)
 ├── lib/
 │   ├── components/
 │   │   ├── Header.svelte        # Nav with mobile menu, language toggle (48px), Ctrl+L
@@ -91,7 +92,7 @@ src/
 - **All pages:** Pre-rendered at build time (static export)
 - **Client hydration:** Only on interactive components (RSVP form, gallery lightbox, countdown)
 - **Svelte 5 runes:** Using `$state`, `$derived`, `$effect` for reactivity
-- **No SSR runtime** — fully static deployment
+- **Adapter:** `@sveltejs/adapter-auto` (Vercel) — pre-renders static pages, deploys API routes as serverless functions
 - **Directory-based routes:** `trailingSlash: 'always'` generates `venue/index.html` instead of `venue.html`
 
 ### 2.3. Service Worker Strategy
@@ -277,7 +278,7 @@ Layer 4: Application Cache (Svelte)
 | Google Maps | `https://www.google.com/maps/dir/?api=1...` | Manual URL entry |
 | Apple Maps | `https://maps.apple.com/?daddr=...` (Universal Links) | Web fallback `maps.apple.com` |
 | Mappls/MapMyIndia | `https://maps.mappls.com/?daddr=...` | Manual URL entry |
-| Vercel Blob (RSVP + Blessings) | `@vercel/blob` SDK | Client retry (3 attempts) |
+| Vercel Blob (RSVP + Blessings + Image Proxy) | `@vercel/blob` SDK (`head()` + `fetch()`) | Image returns 503/404 fallback |
 | Custom Domain | `hrishi.org.in` (GoDaddy registry) | Vercel auto-provisions SSL |
 
 ## 9. Build Pipeline
@@ -312,4 +313,4 @@ Layer 4: Application Cache (Svelte)
 
 ---
 
-*End of Architecture Document — Updated 16 June 2026*
+*End of Architecture Document — Updated 14 June 2026*
