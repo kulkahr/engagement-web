@@ -20,7 +20,8 @@ import type { RequestHandler } from './$types';
 
 export const prerender = false;
 
-const BLOB_DIR = 'images';
+// Images are stored at blob root (e.g. 'monogram.webp', not 'images/monogram.webp')
+const BLOB_DIR = '';
 
 // Only allow known image files — prevents arbitrary blob access
 const VALID_FILES = new Set([
@@ -52,7 +53,7 @@ export const GET: RequestHandler = async ({ params }) => {
 	}
 
 	try {
-		const blobPath = `${BLOB_DIR}/${path}`;
+		const blobPath = BLOB_DIR ? `${BLOB_DIR}/${path}` : path;
 		const blob = await head(blobPath, { token: env.BLOB_READ_WRITE_TOKEN });
 
 		if (!blob) {
